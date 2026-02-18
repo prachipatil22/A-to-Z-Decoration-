@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A to Z Decorators - Home</title>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --accent: #f2c94c;
+      --admin-accent: #8a6fe8;
+      --muted: #d1d1d1;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .welcome-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius: 20px;
+      padding: 50px;
+      max-width: 550px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #f2c94c, #ffb03b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+    p {
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 35px;
+      margin: 10px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn-login {
+      background: linear-gradient(90deg, #ff7a18, #ffb03b);
+      color: #111;
+      box-shadow: 0 6px 18px rgba(255,176,59,0.12);
+    }
+    .btn-login:hover {
+      background: linear-gradient(90deg, #ff8a28, #ffc04b);
+      box-shadow: 0 8px 22px rgba(255,176,59,0.2);
+      transform: translateY(-2px);
+    }
+    .btn-register {
+      background: transparent;
+      color: var(--muted);
+      border: 2px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+    }
+    .btn-register:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--accent);
+      color: white;
+    }
+    .btn-admin {
+      background: linear-gradient(90deg, #8a6fe8, #6b4ecc);
+      color: white;
+      box-shadow: 0 6px 18px rgba(106, 17, 203, 0.2);
+    }
+    .btn-admin:hover {
+      background: linear-gradient(90deg, #9a7ff8, #7b5edc);
+      box-shadow: 0 8px 22px rgba(106, 17, 203, 0.3);
+      transform: translateY(-2px);
+    }
+    .btn-guest {
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      text-decoration: underline;
+      margin-top: 25px;
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+    .btn-guest:hover {
+      color: white;
+    }
+
+    /* Flash Messages */
+    .flash-message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 25px;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 14px;
+      z-index: 100;
+    }
+    .flash-success {
+      background: rgba(59,255,59,0.1);
+      border: 1px solid rgba(59,255,59,0.2);
+      color: #7aff7a;
+    }
+    .flash-error {
+      background: rgba(255,59,59,0.1);
+      border: 1px solid rgba(255,59,59,0.2);
+      color: #ff7a7a;
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-card">
+    <h1>A to Z Decorators</h1>
+    <p>India's Most Trusted Event Decoration Partner</p>
+    
+    <!-- ✅ योग्य लिंक्स – admin login साठी /admin/login वापरा -->
+    <a href="/login" class="btn btn-login">User Login</a>
+    <a href="/register" class="btn btn-register">Register</a>
+    <br>
+    <!-- ✅ हा दुरुस्त केला – /admin/login -->
+    <a href="/admin/login" class="btn btn-admin">Admin Login</a>
+    <br>
+    <a href="/home" class="btn-guest">Continue as Guest →</a>
+  </div>
+
+  <!-- फ्लॅश मेसेजेस (Jinja2) -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</body>
+</html>

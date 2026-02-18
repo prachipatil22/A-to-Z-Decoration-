@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Login - A to Z Decorators</title>
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --admin-accent:#8a6fe8;
+      --muted:#d1d1d1;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: white;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* full-screen loader */
+    .loader-wrap{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg, rgba(0,0,0,0.95), rgba(6,6,6,0.9));
+      z-index:50;
+      transition:opacity .6s ease, visibility .6s ease;
+      visibility:visible;
+      opacity:1;
+    }
+    .loader-wrap.hidden{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+    }
+
+    /* logo styling */
+    .logo{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      user-select:none;
+    }
+    .logo svg{width:160px;height:160px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.6));}
+
+    /* main content */
+    .container{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      position:relative;
+      z-index:1;
+    }
+    .card{
+      width:100%;
+      max-width:500px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius:16px;
+      padding:40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .form-header{
+      text-align:center;
+      margin-bottom:30px;
+    }
+    
+    .main-logo{
+      width:80px;
+      height:80px;
+      margin:0 auto 15px;
+      display:block;
+    }
+    
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:10px;
+    }
+    .brand h1{
+      margin:0;
+      font-size:24px;
+      letter-spacing:1px;
+      color:var(--muted);
+    }
+    .brand p{
+      margin:0;
+      font-size:14px;
+      color:rgba(255,255,255,0.6);
+    }
+
+    .form-group{
+      margin-bottom:20px;
+    }
+    
+    .form-group label{
+      display:block;
+      margin-bottom:8px;
+      font-size:14px;
+      color:rgba(255,255,255,0.8);
+    }
+    
+    .form-input{
+      width:100%;
+      padding:14px 16px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px;
+      color:white;
+      font-size:15px;
+      transition:border-color .3s ease;
+    }
+    
+    .form-input:focus{
+      outline:none;
+      border-color:var(--admin-accent);
+    }
+    
+    .btn{
+      width:100%;
+      padding:14px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:15px;
+      transition:transform .14s ease, box-shadow .14s ease;
+      margin-top:10px;
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn:active{transform:translateY(1px)}
+    
+    .btn.admin-login{
+      background: linear-gradient(90deg, #8a6fe8, #6b4ecc);
+      color: white;
+      box-shadow: 0 6px 18px rgba(106, 17, 203, 0.2);
+    }
+    .btn.admin-login:hover{
+      background: linear-gradient(90deg, #9a7ff8, #7b5edc);
+      box-shadow: 0 8px 22px rgba(106, 17, 203, 0.3);
+    }
+    
+    .btn.back{
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(4px);
+      margin-top:15px;
+    }
+    .btn.back:hover{
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .flash-message{
+      padding:12px;
+      background:rgba(255,59,59,0.1);
+      border:1px solid rgba(255,59,59,0.2);
+      border-radius:8px;
+      margin-bottom:20px;
+      color:#ff7a7a;
+      text-align:center;
+      font-size:14px;
+    }
+    
+    .flash-success{
+      background:rgba(59,255,59,0.1);
+      border:1px solid rgba(59,255,59,0.2);
+      color:#7aff7a;
+    }
+
+    .links{
+      text-align:center;
+      margin-top:25px;
+      font-size:14px;
+      color:rgba(255,255,255,0.6);
+    }
+    .links a{
+      color:var(--admin-accent);
+      text-decoration:none;
+      transition:color .3s ease;
+    }
+    .links a:hover{
+      text-decoration:underline;
+      color:#b7a4ff;
+    }
+
+    @media (max-width:720px){
+      .card{padding:30px 20px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader with animated SVG logo -->
+  <div id="loader" class="loader-wrap" aria-hidden="false">
+    <div class="logo" role="img" aria-label="A to Z Decorators logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#111"/>
+            <stop offset="1" stop-color="#000"/>
+          </linearGradient>
+          <linearGradient id="gold" x1="0" x2="1">
+            <stop offset="0" stop-color="#f7d27b"/>
+            <stop offset="1" stop-color="#f2b43c"/>
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" rx="20" fill="url(#g1)"/>
+        <g transform="translate(20,12)">
+          <path d="M30 130 L60 20 L90 130 Z" fill="url(#gold)" stroke="#000" stroke-opacity="0.12"/>
+          <path d="M110 30 H170 L110 130 H170" stroke="#f2f2f2" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-opacity="0.95"/>
+          <ellipse cx="60" cy="40" rx="30" ry="8" fill="white" opacity="0.06" transform="rotate(-20 60 40)"/>
+        </g>
+        <circle cx="160" cy="160" r="6" fill="#ff7a18" opacity="0.9"/>
+        <g>
+          <animateTransform attributeName="transform"
+            type="scale"
+            values="1;1.06;1"
+            dur="1.6s"
+            repeatCount="indefinite"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Main page -->
+  <main class="container" id="mainContent" aria-hidden="true">
+    <div class="card">
+      <div class="form-header">
+        <div class="main-logo" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A to Z Decorators">
+            <defs>
+              <linearGradient id="mg1" x1="0" x2="1">
+                <stop offset="0" stop-color="#111"/>
+                <stop offset="1" stop-color="#000"/>
+              </linearGradient>
+              <linearGradient id="mgold" x1="0" x2="1">
+                <stop offset="0" stop-color="#f7d27b"/>
+                <stop offset="1" stop-color="#f2b43c"/>
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" rx="18" fill="transparent"/>
+            <g transform="translate(16,12)">
+              <path d="M30 130 L60 20 L90 130 Z" fill="url(#mgold)"/>
+              <path d="M110 30 H170 L110 130 H170" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="brand">
+          <h1>Admin Login</h1>
+          <p>Access the A to Z Decorators Admin Panel</p>
+        </div>
+      </div>
+
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-message {% if category == 'success' %}flash-success{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="/admin/login">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-input" required>
+        </div>
+        
+        <button type="submit" class="btn admin-login">Login as Admin</button>
+      </form>
+      
+      <a href="/home" class="btn back">Back to Main Site</a>
+      
+      <div class="links">
+        <p>Need user access? <a href="/login">User Login</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      const loader = document.getElementById('loader');
+      const main = document.getElementById('mainContent');
+      const SHOW_MS = 1000;
+
+      main.setAttribute('aria-hidden','true');
+      loader.setAttribute('aria-hidden','false');
+
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          loader.setAttribute('aria-hidden','true');
+          main.setAttribute('aria-hidden','false');
+        }, SHOW_MS);
+      });
+    })();
+  </script>
+</body>
+</html>

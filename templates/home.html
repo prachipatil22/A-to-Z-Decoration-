@@ -1070,6 +1070,52 @@
             .selected-items-panel { width: 90%; right: 5%; top: 80px; }
             .global-book-now-btn { padding: 14px 30px; bottom: 20px; right: 20px; }
         }
+
+        /* नवीन स्टाईल - प्राइस टॉगल आणि कस्टम इनपुटसाठी */
+        .price-toggle {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .price-toggle .btn {
+            flex: 1;
+            border-radius: 50px;
+            padding: 8px;
+            font-weight: 600;
+        }
+        .price-toggle .btn.active {
+            background: linear-gradient(145deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+        }
+        .fixed-packages select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(138,111,232,0.2);
+            border-radius: 50px;
+            margin: 10px 0;
+        }
+        .custom-price input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(138,111,232,0.2);
+            border-radius: 50px;
+            margin: 10px 0;
+        }
+        .add-to-cart-btn {
+            width: 100%;
+            background: linear-gradient(145deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
     </style>
 </head>
 <body>
@@ -1101,7 +1147,8 @@
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
-                
+                <!-- Auth buttons - JavaScript द्वारे populate होतील -->
+                <div class="d-flex" id="auth-buttons"></div>
             </div>
         </div>
     </nav>
@@ -1176,35 +1223,76 @@
                     <div class="service-card">
                         <div class="card-img-wrapper">
                             <span class="service-badge"><i class="fas fa-crown me-1"></i> Most Popular</span>
-                            <img src="../static/image/wedding.jpg"class="service-card-img" alt="Wedding">
+                            <img src="../static/image/wedding.jpg" class="service-card-img" alt="Wedding">
                         </div>
                         <div class="service-card-body">
                             <h5 class="service-title">Wedding Decorations</h5>
                             <p class="service-text">Complete wedding setup including mandap, stage, floral arrangements & premium lighting.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹50,000+</span>
-                                <button class="btn-select" onclick="selectService('Wedding Decorations', 50000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <!-- प्राइस टॉगल -->
+                            <div class="price-toggle" id="toggle-wedding">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('wedding', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('wedding', 'custom')">Custom</button>
                             </div>
+                            
+                            <!-- फिक्स्ड पॅकेजेस (डीफॉल्ट) -->
+                            <div id="fixed-wedding" class="fixed-packages">
+                                <select id="wedding-select">
+                                    <option value="35000">Basic Wedding - ₹35,000</option>
+                                    <option value="50000" selected>Premium Wedding - ₹50,000</option>
+                                    <option value="75000">Luxury Wedding - ₹75,000</option>
+                                    <option value="100000">Royal Wedding - ₹1,00,000</option>
+                                </select>
+                            </div>
+                            
+                            <!-- कस्टम बजेट (सुरुवातीला लपवलेले) -->
+                            <div id="custom-wedding" class="custom-price" style="display: none;">
+                                <input type="number" id="wedding-custom" class="form-control" placeholder="Enter your budget (min ₹20,000)" min="20000">
+                            </div>
+                            
+                            <!-- Add to Cart बटण -->
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('wedding', 'Wedding Decorations')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 2. Birthday Parties -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
                         <div class="card-img-wrapper">
                             <span class="service-badge">🎂 Trending</span>
-                            <img src="../static/image/birthday.jpg"class="service-card-img" alt="Birthday">
+                            <img src="../static/image/birthday.jpg" class="service-card-img" alt="Birthday">
                         </div>
                         <div class="service-card-body">
                             <h5 class="service-title">Birthday Parties</h5>
                             <p class="service-text">Theme-based decorations, balloon arch, photo booth, props & return gifts.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹15,000+</span>
-                                <button class="btn-select" onclick="selectService('Birthday Parties', 15000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-birthday">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('birthday', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('birthday', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-birthday" class="fixed-packages">
+                                <select id="birthday-select">
+                                    <option value="10000">Basic Birthday - ₹10,000</option>
+                                    <option value="15000" selected>Premium Birthday - ₹15,000</option>
+                                    <option value="25000">Luxury Birthday - ₹25,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-birthday" class="custom-price" style="display: none;">
+                                <input type="number" id="birthday-custom" class="form-control" placeholder="Enter your budget (min ₹5,000)" min="5000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('birthday', 'Birthday Parties')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 3. Corporate Events -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
@@ -1215,13 +1303,31 @@
                         <div class="service-card-body">
                             <h5 class="service-title">Corporate Events</h5>
                             <p class="service-text">Professional setups for conferences, product launches, branding & AV solutions.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹30,000+</span>
-                                <button class="btn-select" onclick="selectService('Corporate Events', 30000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-corporate">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('corporate', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('corporate', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-corporate" class="fixed-packages">
+                                <select id="corporate-select">
+                                    <option value="20000">Basic Corporate - ₹20,000</option>
+                                    <option value="30000" selected>Premium Corporate - ₹30,000</option>
+                                    <option value="50000">Luxury Corporate - ₹50,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-corporate" class="custom-price" style="display: none;">
+                                <input type="number" id="corporate-custom" class="form-control" placeholder="Enter your budget (min ₹15,000)" min="15000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('corporate', 'Corporate Events')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 4. Anniversary Decor -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
@@ -1232,13 +1338,31 @@
                         <div class="service-card-body">
                             <h5 class="service-title">Anniversary Decor</h5>
                             <p class="service-text">Romantic setups with candle lights, flower petals, photo memories & elegant themes.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹20,000+</span>
-                                <button class="btn-select" onclick="selectService('Anniversary Decor', 20000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-anniversary">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('anniversary', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('anniversary', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-anniversary" class="fixed-packages">
+                                <select id="anniversary-select">
+                                    <option value="15000">Basic Anniversary - ₹15,000</option>
+                                    <option value="20000" selected>Premium Anniversary - ₹20,000</option>
+                                    <option value="30000">Luxury Anniversary - ₹30,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-anniversary" class="custom-price" style="display: none;">
+                                <input type="number" id="anniversary-custom" class="form-control" placeholder="Enter your budget (min ₹8,000)" min="8000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('anniversary', 'Anniversary Decor')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 5. Baby Shower -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
@@ -1249,30 +1373,66 @@
                         <div class="service-card-body">
                             <h5 class="service-title">Baby Shower</h5>
                             <p class="service-text">Cute themes, balloon arches, games setup, cake table & gift corner.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹12,000+</span>
-                                <button class="btn-select" onclick="selectService('Baby Shower', 12000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-baby">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('baby', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('baby', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-baby" class="fixed-packages">
+                                <select id="baby-select">
+                                    <option value="8000">Basic Baby Shower - ₹8,000</option>
+                                    <option value="12000" selected>Premium Baby Shower - ₹12,000</option>
+                                    <option value="18000">Luxury Baby Shower - ₹18,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-baby" class="custom-price" style="display: none;">
+                                <input type="number" id="baby-custom" class="form-control" placeholder="Enter your budget (min ₹5,000)" min="5000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('baby', 'Baby Shower')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 6. Festival Decor -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
                         <div class="card-img-wrapper">
                             <span class="service-badge">🎊 Festive</span>
-                            <img src="../static/image/festival.jpg " class="service-card-img" alt="Festival">
+                            <img src="../static/image/festival.jpg" class="service-card-img" alt="Festival">
                         </div>
                         <div class="service-card-body">
                             <h5 class="service-title">Festival Decor</h5>
                             <p class="service-text">Diwali, Christmas, Holi, Ganesh Chaturthi - traditional & modern themes.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹10,000+</span>
-                                <button class="btn-select" onclick="selectService('Festival Decor', 10000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-festival">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('festival', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('festival', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-festival" class="fixed-packages">
+                                <select id="festival-select">
+                                    <option value="5000">Basic Festival - ₹5,000</option>
+                                    <option value="10000" selected>Premium Festival - ₹10,000</option>
+                                    <option value="15000">Luxury Festival - ₹15,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-festival" class="custom-price" style="display: none;">
+                                <input type="number" id="festival-custom" class="form-control" placeholder="Enter your budget (min ₹3,000)" min="3000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('festival', 'Festival Decor')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 7. Car Decoration -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
@@ -1283,44 +1443,97 @@
                         <div class="service-card-body">
                             <h5 class="service-title">Car Decoration</h5>
                             <p class="service-text">Wedding car, gift car, VIP vehicle decoration with fresh flowers & premium ribbons.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹8,000+</span>
-                                <button class="btn-select" onclick="selectService('Car Decoration', 8000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-car">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('car', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('car', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-car" class="fixed-packages">
+                                <select id="car-select">
+                                    <option value="5000">Basic Car - ₹5,000</option>
+                                    <option value="8000" selected>Premium Car - ₹8,000</option>
+                                    <option value="12000">Luxury Car - ₹12,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-car" class="custom-price" style="display: none;">
+                                <input type="number" id="car-custom" class="form-control" placeholder="Enter your budget (min ₹3,000)" min="3000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('car', 'Car Decoration')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 8. Murti Decoration -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
                         <div class="card-img-wrapper">
                             <span class="service-badge">🕉️ Sacred</span>
-                            <img src="../static/image/bappa.jpg"class="service-card-img" alt="Murti">
+                            <img src="../static/image/bappa.jpg" class="service-card-img" alt="Murti">
                         </div>
                         <div class="service-card-body">
                             <h5 class="service-title">Murti Decoration</h5>
                             <p class="service-text">Traditional idol decoration for Ganesh Chaturthi, Navratri, Durga Puja with flowers & lights.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹7,000+</span>
-                                <button class="btn-select" onclick="selectService('Murti Decoration', 7000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-murti">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('murti', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('murti', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-murti" class="fixed-packages">
+                                <select id="murti-select">
+                                    <option value="5000">Basic Murti - ₹5,000</option>
+                                    <option value="7000" selected>Premium Murti - ₹7,000</option>
+                                    <option value="10000">Luxury Murti - ₹10,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-murti" class="custom-price" style="display: none;">
+                                <input type="number" id="murti-custom" class="form-control" placeholder="Enter your budget (min ₹2,000)" min="2000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('murti', 'Murti Decoration')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <!-- 9. Opening Ceremony -->
                 <div class="col-lg-4 col-md-6">
                     <div class="service-card">
                         <div class="card-img-wrapper">
                             <span class="service-badge">🏢 Inauguration</span>
-                            <img src=https://i.pinimg.com/736x/64/1a/b5/641ab5224b8fe71c7c064b1a009e8e11.jpg class="service-card-img" alt="Opening">
+                            <img src="https://i.pinimg.com/736x/64/1a/b5/641ab5224b8fe71c7c064b1a009e8e11.jpg" class="service-card-img" alt="Opening">
                         </div>
                         <div class="service-card-body">
                             <h5 class="service-title">Opening Ceremony</h5>
                             <p class="service-text">Grand inauguration decoration for shops, offices, showrooms with floral setup & ribbon cutting.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="service-price">₹9,000+</span>
-                                <button class="btn-select" onclick="selectService('Opening Ceremony', 9000)"><i class="fas fa-check-circle me-2"></i>Select</button>
+                            
+                            <div class="price-toggle" id="toggle-opening">
+                                <button class="btn btn-outline-primary active" onclick="setPriceMode('opening', 'fixed')">Fixed</button>
+                                <button class="btn btn-outline-primary" onclick="setPriceMode('opening', 'custom')">Custom</button>
                             </div>
+                            
+                            <div id="fixed-opening" class="fixed-packages">
+                                <select id="opening-select">
+                                    <option value="5000">Basic Opening - ₹5,000</option>
+                                    <option value="9000" selected>Premium Opening - ₹9,000</option>
+                                    <option value="15000">Luxury Opening - ₹15,000</option>
+                                </select>
+                            </div>
+                            
+                            <div id="custom-opening" class="custom-price" style="display: none;">
+                                <input type="number" id="opening-custom" class="form-control" placeholder="Enter your budget (min ₹5,000)" min="5000">
+                            </div>
+                            
+                            <button class="add-to-cart-btn mt-3" onclick="addToCart('opening', 'Opening Ceremony')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1538,49 +1751,12 @@
                 <p class="text-soft">Explore our finest decoration works</p>
             </div>
             
+            <!-- एकच row मध्ये 9 images (3 rows × 3 columns) -->
             <div class="row g-4">
+                <!-- Row 1 - 3 images -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
-                        <img src="../static/image/haldi.jpg" class="gallery-img" alt="Haldi">
-                        <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
-                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.5k</span></div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-             <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="gallery-item">
-                        <img src="../static/image/haldi.jpg" class="gallery-img" alt="Haldi">
-                        <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
-                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.5k</span></div>
-                        </div>
-                    </div>
-                </div>
-
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="gallery-item">
-                        <img src="../static/image/haldi.jpg" class="gallery-img" alt="Haldi">
-                        <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
-                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.5k</span></div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="gallery-item">
-                        <img src="../static/image/officee.jpg" class="gallery-img" alt="Office">
+                        <img src="../static/image/haldi.jpg" class="gallery-img" alt="Haldi Ceremony">
                         <div class="gallery-overlay">
                             <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.5k</span></div>
@@ -1589,17 +1765,27 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
-                        <img src="../static/image/cop.jpg" class="gallery-img" alt="Corporate">
+                        <img src="../static/image/officee.jpg" class="gallery-img" alt="Office Event">
+                        <div class="gallery-overlay">
+                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.8k</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-item">
+                        <img src="../static/image/cop.jpg" class="gallery-img" alt="Corporate Party">
                         <div class="gallery-overlay">
                             <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.2k</span></div>
                         </div>
                     </div>
                 </div>
-                <!-- 3 additional images -->
+                
+                <!-- Row 2 - 3 images -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
-                        <img src="../static/image/wedcar.jpg "  class="gallery-img" alt="Car Decoration">
+                        <img src="../static/image/wedcar.jpg" class="gallery-img" alt="Wedding Car">
                         <div class="gallery-overlay">
                             <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.1k</span></div>
@@ -1608,7 +1794,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
-                        <img src="../static/image/holi.jpg" class="gallery-img" alt="Holi">
+                        <img src="../static/image/holi.jpg" class="gallery-img" alt="Holi Celebration">
                         <div class="gallery-overlay">
                             <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.5k</span></div>
@@ -1617,15 +1803,44 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
-                        <img src="../static/image/krishna.jpg " class="gallery-img" alt="Murti Decoration">
+                        <img src="../static/image/krishna.jpg" class="gallery-img" alt="Krishna Janmashtami">
                         <div class="gallery-overlay">
                             <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.3k</span></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                
+                <!-- Row 3 - 3 images (काही रिपीट केल्या आहेत, तू योग्य images ने बदल) -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-item">
+                        <img src="../static/image/haldi.jpg" class="gallery-img" alt="Pre-Wedding Haldi">
+                        <div class="gallery-overlay">
+                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.0k</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-item">
+                        <img src="../static/image/officee.jpg" class="gallery-img" alt="Office Meeting">
+                        <div class="gallery-overlay">
+                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.6k</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-item">
+                        <img src="../static/image/cop.jpg" class="gallery-img" alt="Corporate Gala">
+                        <div class="gallery-overlay">
+                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.4k</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- row बंद -->
+        </div> <!-- container बंद -->
     </section>
 
     <!-- ======= Contact Section ======= -->
@@ -1894,7 +2109,87 @@
         // Initialize AOS
         AOS.init({ duration: 800, once: true });
 
-        // ========== Full Booking & Interaction JS ==========
+        // ========== नवीन फंक्शन्स ==========
+        // प्राइस मोड सेट करणे (Fixed/Custom)
+        function setPriceMode(service, mode) {
+            // Fixed आणि Custom divs लपवा/दाखवा
+            document.getElementById('fixed-' + service).style.display = (mode === 'fixed' ? 'block' : 'none');
+            document.getElementById('custom-' + service).style.display = (mode === 'custom' ? 'block' : 'none');
+            
+            // टॉगल बटन्स active करा
+            let btns = document.querySelectorAll('#toggle-' + service + ' .btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            if (mode === 'fixed') {
+                btns[0].classList.add('active');
+            } else {
+                btns[1].classList.add('active');
+            }
+        }
+
+        // कार्टमध्ये Add to Cart
+        function addToCart(service, displayName) {
+            let mode = document.querySelector('#toggle-' + service + ' .btn.active').innerText.trim().toLowerCase();
+            let price, finalName;
+            
+            if (mode === 'fixed') {
+                // Fixed mode: select मधून किंमत घ्या
+                let select = document.getElementById(service + '-select');
+                price = parseFloat(select.value);
+                let optionText = select.options[select.selectedIndex].text;
+                finalName = displayName + ' - ' + optionText.split(' - ')[0];
+            } else {
+                // Custom mode: input मधून किंमत घ्या
+                let input = document.getElementById(service + '-custom');
+                price = parseFloat(input.value);
+                
+                // Validation
+                if (isNaN(price) || price <= 0) {
+                    showNotification('Please enter a valid budget amount!', 'error');
+                    return;
+                }
+                
+                // Minimum price check (प्रत्येक service साठी वेगळी)
+                let minPrice = {
+                    'wedding': 20000,
+                    'birthday': 5000,
+                    'corporate': 15000,
+                    'anniversary': 8000,
+                    'baby': 5000,
+                    'festival': 3000,
+                    'car': 3000,
+                    'murti': 2000,
+                    'opening': 5000
+                }[service];
+                
+                if (price < minPrice) {
+                    showNotification(`Minimum budget for this service is ₹${minPrice}!`, 'error');
+                    return;
+                }
+                
+                finalName = displayName + ' (Custom Budget)';
+            }
+            
+            // Check if ही service आधीच निवडली आहे
+            if (selectedServices.some(s => s.name.includes(displayName))) {
+                showNotification(displayName + ' already selected!', 'error');
+                return;
+            }
+            
+            // Cart मध्ये add करा
+            selectedServices.push({
+                id: Date.now() + Math.random(),
+                name: finalName,
+                price: price,
+                original_service: displayName,
+                mode: mode
+            });
+            
+            updateSelectedItemsDisplay();
+            showNotification(finalName + ' added with ₹' + price.toLocaleString());
+            document.getElementById('global-book-now-btn').style.display = 'flex';
+        }
+
+        // ========== जुनी फंक्शन्स (तशीच ठेवली) ==========
         let selectedServices = [];
         let bookingData = {};
         let selectedPaymentOption = '';
@@ -1910,15 +2205,14 @@
             fetch('/api/check_login')
                 .then(response => response.json())
                 .then(data => {
+                    const authDiv = document.getElementById('auth-buttons');
                     if (data.logged_in) {
-                        console.log('Logged in as:', data.username);
-                        // Login बटन्स लपवा आणि user नाव दाखवा
-                        document.getElementById('auth-buttons').innerHTML = `
+                        authDiv.innerHTML = `
                             <span class="text-white me-2">Welcome, ${data.username}</span>
                             <button class="btn-book" onclick="logout()">Logout</button>
                         `;
                     } else {
-                        console.log('Not logged in - booking will be saved as guest');
+                        authDiv.innerHTML = ''; // लॉगिन नसेल तर रिकामे
                     }
                 })
                 .catch(error => {
@@ -1936,24 +2230,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.reload();
+                    window.location.href = '/';
                 }
             });
-        }
-
-        function selectService(name, price) {
-            if (selectedServices.some(s => s.name === name)) {
-                showNotification('Service already selected!', 'error');
-                return;
-            }
-            selectedServices.push({ 
-                id: Date.now() + Math.random(), 
-                name: name, 
-                price: price 
-            });
-            updateSelectedItemsDisplay();
-            showNotification(name + ' added!');
-            document.getElementById('global-book-now-btn').style.display = 'flex';
         }
 
         function removeService(id) {

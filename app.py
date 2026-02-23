@@ -33,7 +33,7 @@ class Booking(db.Model):
     phone = db.Column(db.String(20), nullable=False)
     event_date = db.Column(db.String(20), nullable=False)
     event_type = db.Column(db.String(50), nullable=False)
-    guests = db.Column(db.Integer, nullable=False)
+    # guests column removed
     venue_address = db.Column(db.Text, nullable=False)
     special_requests = db.Column(db.Text)
     payment_method = db.Column(db.String(50), nullable=False)
@@ -150,7 +150,7 @@ def init_database():
 
 init_database()
 
-# -------------------- USER ROUTES --------------------
+# -------------------- PAGE ROUTES (for all your HTML files) --------------------
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -160,6 +160,41 @@ def home():
     services = Service.query.filter_by(is_active=True).all()
     return render_template('home.html', services=services)
 
+@app.route('/wedding')
+def wedding_page():
+    return render_template('wedding.html')
+
+@app.route('/birthday')
+def birthday_page():
+    return render_template('birthday.html')
+
+@app.route('/car')
+def car_page():
+    return render_template('car.html')
+
+@app.route('/festival')
+def festival_page():
+    return render_template('festival.html')
+
+@app.route('/newopening')
+def newopening_page():
+    return render_template('newopening.html')
+
+@app.route('/murti')
+def murti_page():
+    return render_template('murti.html')
+
+@app.route('/corporate')
+def corporate_page():
+    return render_template('corporate.html')
+
+@app.route('/house')
+def house_page():
+    return render_template('house.html')
+
+
+
+# -------------------- USER AUTH ROUTES --------------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if session.get('user_id'):
@@ -310,7 +345,7 @@ def api_create_booking():
             phone=data['phone'],
             event_date=data['event_date'],
             event_type=data['event_type'],
-            guests=int(data.get('guests', 50)),
+            # guests field removed
             venue_address=data.get('venue_address', 'A to Z Decorators'),
             special_requests=data.get('special_requests', ''),
             payment_method=data['payment_method'],
@@ -397,8 +432,8 @@ def admin_login():
             return redirect(url_for('admin_panel'))
         else:
             flash('Invalid credentials or not an admin!', 'error')
-            return redirect(url_for('admin_login'))   # ✅ योग्य फंक्शन नाव
-    return render_template('adminlogin.html')          # ✅ तुझ्या फाइलनावानुसार
+            return redirect(url_for('admin_login'))
+    return render_template('adminlogin.html')
 
 @app.route('/admin/panel')
 @admin_required
@@ -423,9 +458,6 @@ def admin_panel():
                            all_users=all_users,
                            all_services=all_services,
                            all_contacts=all_contacts)
-
-# ... (इतर अ‍ॅडमिन रूट्स - बुकिंग अपडेट, यूजर टॉगल, सर्व्हिस मॅनेजमेंट, कॉन्टॅक्ट, रीसेट डीबी) ...
-# (ही सर्व रूट्स तुझ्या कोडप्रमाणे यथावत ठेवा, फक्त वरील दोन रूट्समध्ये बदल केले आहेत.)
 
 @app.route('/admin/booking/update/<int:id>', methods=['POST'])
 @admin_required

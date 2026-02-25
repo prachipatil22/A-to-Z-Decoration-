@@ -33,7 +33,6 @@ class Booking(db.Model):
     phone = db.Column(db.String(20), nullable=False)
     event_date = db.Column(db.String(20), nullable=False)
     event_type = db.Column(db.String(50), nullable=False)
-    # guests column removed
     venue_address = db.Column(db.Text, nullable=False)
     special_requests = db.Column(db.Text)
     payment_method = db.Column(db.String(50), nullable=False)
@@ -106,7 +105,7 @@ def init_database():
             db.session.add(guest)
             print("✅ Guest user created.", flush=True)
         
-        # Add sample services (9 packages)
+        # Add sample services
         if not Service.query.first():
             services = [
                 Service(name='Wedding Decorations', price=50000, category='wedding', 
@@ -136,10 +135,13 @@ def init_database():
                 Service(name='Opening Ceremony', price=9000, category='inauguration',
                         description='Grand inauguration decoration for shops, offices, showrooms with floral setup & ribbon cutting.',
                         image_url='https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg'),
+                Service(name='House Decoration', price=12000, category='house',
+                        description='Complete house decoration for festivals, parties & special occasions.',
+                        image_url='https://images.pexels.com/photos/1571470/pexels-photo-1571470.jpeg'),
             ]
             for s in services:
                 db.session.add(s)
-            print("✅ 9 sample services added.", flush=True)
+            print("✅ 10 sample services added.", flush=True)
         
         try:
             db.session.commit()
@@ -150,7 +152,7 @@ def init_database():
 
 init_database()
 
-# -------------------- PAGE ROUTES (for all your HTML files) --------------------
+# -------------------- PAGE ROUTES --------------------
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -160,6 +162,7 @@ def home():
     services = Service.query.filter_by(is_active=True).all()
     return render_template('home.html', services=services)
 
+# All decoration routes
 @app.route('/wedding')
 def wedding_page():
     return render_template('wedding.html')
@@ -180,6 +183,10 @@ def festival_page():
 def newopening_page():
     return render_template('newopening.html')
 
+@app.route('/inauguration')
+def inauguration_page():
+    return render_template('inauguration.html')
+
 @app.route('/murti')
 def murti_page():
     return render_template('murti.html')
@@ -192,7 +199,13 @@ def corporate_page():
 def house_page():
     return render_template('house.html')
 
+@app.route('/anniversary')
+def anniversary_page():
+    return render_template('anniversary.html')
 
+@app.route('/baby-shower')
+def baby_shower_page():
+    return render_template('baby_shower.html')
 
 # -------------------- USER AUTH ROUTES --------------------
 @app.route('/login', methods=['GET', 'POST'])
@@ -252,7 +265,7 @@ def logout():
     flash('Logged out successfully!', 'success')
     return redirect(url_for('index'))
 
-# -------------------- API ROUTES (AJAX) --------------------
+# -------------------- API ROUTES --------------------
 @app.route('/api/login', methods=['POST'])
 def api_login():
     data = request.get_json()
@@ -337,6 +350,8 @@ def api_create_booking():
         for field in required:
             if field not in data:
                 return jsonify({'success': False, 'message': f'Missing field: {field}'}), 400
+        
+        # Create new booking
         booking = Booking(
             booking_id=booking_id,
             user_id=user_id,
@@ -345,7 +360,6 @@ def api_create_booking():
             phone=data['phone'],
             event_date=data['event_date'],
             event_type=data['event_type'],
-            # guests field removed
             venue_address=data.get('venue_address', 'A to Z Decorators'),
             special_requests=data.get('special_requests', ''),
             payment_method=data['payment_method'],
@@ -355,10 +369,11 @@ def api_create_booking():
         )
         db.session.add(booking)
         db.session.commit()
-        print(f"✅ Booking saved: {booking_id}", flush=True)
+        print(f"✅ Booking saved: {booking_id} with payment method: {data['payment_method']}, Phone: {data['phone']}", flush=True)
         return jsonify({
             'success': True,
             'booking_id': booking_id,
+            'payment_method': data['payment_method'],
             'booking_date': booking.booking_date.strftime('%Y-%m-%d %H:%M:%S')
         })
     except Exception as e:
@@ -382,6 +397,8 @@ def api_my_bookings():
             'event_date': b.event_date,
             'event_type': b.event_type,
             'total_amount': b.total_amount,
+            'payment_method': b.payment_method,
+            'phone': b.phone,
             'status': b.status,
             'services': services
         })
@@ -413,7 +430,6 @@ def api_contact():
 # -------------------- ADMIN PANEL ROUTES --------------------
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
-    """अ‍ॅडमिन लॉगिन - adminlogin.html वापरतो"""
     if session.get('user_id'):
         user = User.query.get(session['user_id'])
         if user and user.is_admin:
@@ -438,16 +454,34 @@ def admin_login():
 @app.route('/admin/panel')
 @admin_required
 def admin_panel():
-    """अ‍ॅडमिन डॅशबोर्ड - admin.html रेंडर करतो"""
+    # Get counts
     total_users = User.query.count()
     total_bookings = Booking.query.count()
     total_services = Service.query.count()
     total_contacts = Contact.query.count()
+    
+    # Get recent bookings (last 5)
     recent_bookings = Booking.query.order_by(Booking.booking_date.desc()).limit(5).all()
+    
+    # Get all bookings for the table
     all_bookings = Booking.query.order_by(Booking.booking_date.desc()).all()
+    
+    # Get all users
     all_users = User.query.order_by(User.created_at.desc()).all()
+    
+    # Get all services
     all_services = Service.query.all()
+    
+    # Get all contacts
     all_contacts = Contact.query.order_by(Contact.created_at.desc()).all()
+    
+    # Debug prints
+    print("="*50)
+    print(f"Total Bookings: {total_bookings}")
+    for booking in all_bookings:
+        print(f"Booking ID: {booking.booking_id}, Customer: {booking.full_name}, Phone: {booking.phone}, Payment: {booking.payment_method}")
+    print("="*50)
+    
     return render_template('admin.html',
                            total_users=total_users,
                            total_bookings=total_bookings,
@@ -545,6 +579,8 @@ def reset_db():
         db.drop_all()
         db.create_all()
         print("✅ Database dropped and recreated.", flush=True)
+        
+        # Create admin
         admin = User(
             username='admin',
             email='admin@atozdecorators.com',
@@ -553,6 +589,8 @@ def reset_db():
             is_admin=True
         )
         db.session.add(admin)
+        
+        # Create guest
         guest = User(
             username='guest',
             email='guest@atozdecorators.com',
@@ -561,6 +599,8 @@ def reset_db():
             is_admin=False
         )
         db.session.add(guest)
+        
+        # Add services
         services = [
             Service(name='Wedding Decorations', price=50000, category='wedding', 
                     description='Complete wedding decoration...', image_url='https://images.unsplash.com/photo-1511285560929-80b456fea0bc'),
@@ -580,11 +620,14 @@ def reset_db():
                     description='Traditional idol decoration for festivals...', image_url='https://images.pexels.com/photos/16213627/pexels-photo-16213627.jpeg'),
             Service(name='Opening Ceremony', price=9000, category='inauguration',
                     description='Grand inauguration decoration for shops & offices...', image_url='https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg'),
+            Service(name='House Decoration', price=12000, category='house',
+                    description='Complete house decoration...', image_url='https://images.pexels.com/photos/1571470/pexels-photo-1571470.jpeg'),
         ]
         for s in services:
             db.session.add(s)
+        
         db.session.commit()
-        flash('Database reset! Admin, Guest and 9 services recreated.', 'success')
+        flash('Database reset! Admin, Guest and 10 services recreated.', 'success')
         print("✅ Database reset completed.", flush=True)
     except Exception as e:
         db.session.rollback()
@@ -593,4 +636,4 @@ def reset_db():
     return redirect(url_for('admin_login'))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000, use_reloader=False)
+    app.run(debug=True, port=5000)

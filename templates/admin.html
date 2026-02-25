@@ -4,147 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - A to Z Decorators</title>
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #8a6fe8;
-            --primary-light: #b7a4ff;
-            --primary-soft: #e9e3ff;
             --accent: #6b4ecc;
-            --white: #ffffff;
-            --text-dark: #2d2d3c;
-            --text-soft: #5a5a6e;
-            --shadow-sm: 0 5px 20px rgba(138, 111, 232, 0.08);
-            --shadow-md: 0 10px 30px rgba(138, 111, 232, 0.12);
-            --border-radius: 20px;
-            --border-radius-sm: 12px;
-            --transition: all 0.3s ease;
         }
-
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5fa;
-            color: var(--text-dark);
-            overflow-x: hidden;
         }
-
-        /* Sidebar */
         .sidebar {
             min-height: 100vh;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
-            box-shadow: var(--shadow-md);
         }
-
-        .sidebar .brand {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
         .sidebar .nav-link {
             color: white;
             padding: 0.8rem 1.5rem;
-            margin: 0.5rem 1rem;
-            border-radius: 12px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
+            transition: 0.3s;
         }
-
         .sidebar .nav-link:hover {
             background: rgba(255,255,255,0.2);
             transform: translateX(5px);
         }
-
         .sidebar .nav-link.active {
             background: rgba(255,255,255,0.25);
             font-weight: 600;
         }
-
-        /* Main content */
         .main-content {
             padding: 30px;
         }
-
-        /* Stat cards */
         .stat-card {
             background: white;
-            border-radius: var(--border-radius);
+            border-radius: 20px;
             padding: 25px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             border-left: 5px solid var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .stat-icon {
-            font-size: 2.8rem;
-            color: var(--primary-light);
-            opacity: 0.7;
-        }
-
-        /* Section cards */
         .section-card {
             background: white;
-            border-radius: var(--border-radius);
+            border-radius: 20px;
             padding: 25px;
             margin-top: 30px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: var(--text-dark);
-            border-bottom: 2px solid var(--primary-soft);
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-        }
-
-        .badge-success { background: #28a745; color: white; padding: 5px 10px; border-radius: 20px; }
-        .badge-warning { background: #ffc107; color: black; }
-        .badge-danger { background: #dc3545; color: white; }
-        .badge-secondary { background: #6c757d; color: white; }
-        .badge-info { background: #17a2b8; color: white; }
-
-        .btn-sm {
-            border-radius: 20px;
-            padding: 0.25rem 1rem;
-        }
-
-        .table th {
-            font-weight: 600;
-            color: var(--text-dark);
-            border-bottom-width: 1px;
-        }
-
-        .table td {
-            vertical-align: middle;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar { min-height: auto; }
-            .main-content { padding: 20px; }
-            .stat-card { margin-bottom: 15px; }
+        .badge-info {
+            background: #17a2b8;
+            color: white;
         }
     </style>
 </head>
@@ -153,39 +61,30 @@
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 px-0 sidebar">
-                <div class="brand">
+                <div class="brand text-center py-4 fs-3 fw-bold">
                     <i class="fas fa-palette me-2"></i> Admin
                 </div>
-                <nav class="nav flex-column mt-3">
-                    <!-- Section toggles: return false prevents hash jump -->
-                    <a class="nav-link" href="#" onclick="showSection('dashboard'); return false;" id="link-dashboard">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="#" onclick="showSection('dashboard'); return false;" id="link-dashboard">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                     </a>
                     <a class="nav-link" href="#" onclick="showSection('bookings'); return false;" id="link-bookings">
-                        <i class="fas fa-calendar-check"></i> Bookings
+                        <i class="fas fa-calendar-check me-2"></i> Bookings
                     </a>
                     <a class="nav-link" href="#" onclick="showSection('users'); return false;" id="link-users">
-                        <i class="fas fa-users"></i> Users
+                        <i class="fas fa-users me-2"></i> Users
                     </a>
-                    <a class="nav-link" href="#" onclick="showSection('services'); return false;" id="link-services">
-                        <i class="fas fa-cogs"></i> Services
-                    </a>
-                    <a class="nav-link" href="#" onclick="showSection('contacts'); return false;" id="link-contacts">
-                        <i class="fas fa-envelope"></i> Contacts
-                    </a>
-                    <!-- External links: no section toggle -->
                     <a class="nav-link" href="{{ url_for('home') }}" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> View Site
+                        <i class="fas fa-external-link-alt me-2"></i> View Site
                     </a>
                     <a class="nav-link" href="{{ url_for('logout') }}">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
                     </a>
                 </nav>
             </div>
 
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 main-content">
-                <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold" style="color: var(--accent);">
                         <i class="fas fa-crown me-2"></i> Admin Dashboard
@@ -197,11 +96,10 @@
                     </div>
                 </div>
 
-                <!-- Flash Messages -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
                         {% for category, message in messages %}
-                            <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                            <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
                                 {{ message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
@@ -209,9 +107,9 @@
                     {% endif %}
                 {% endwith %}
 
-                <!-- ========== DASHBOARD SECTION ========== -->
+                <!-- DASHBOARD SECTION -->
                 <div id="dashboard-section" class="section-card">
-                    <h4 class="section-title"><i class="fas fa-chart-line me-2"></i> Overview</h4>
+                    <h4 class="mb-4"><i class="fas fa-chart-line me-2"></i> Overview</h4>
                     <div class="row g-4">
                         <div class="col-md-3">
                             <div class="stat-card">
@@ -219,7 +117,7 @@
                                     <h6 class="text-muted mb-1">Total Users</h6>
                                     <h2 class="display-6 fw-bold" style="color: var(--accent);">{{ total_users|default(0) }}</h2>
                                 </div>
-                                <i class="fas fa-users stat-icon"></i>
+                                <i class="fas fa-users fa-3x" style="color: var(--primary); opacity: 0.5;"></i>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -228,63 +126,43 @@
                                     <h6 class="text-muted mb-1">Total Bookings</h6>
                                     <h2 class="display-6 fw-bold" style="color: var(--accent);">{{ total_bookings|default(0) }}</h2>
                                 </div>
-                                <i class="fas fa-calendar-check stat-icon"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div>
-                                    <h6 class="text-muted mb-1">Total Services</h6>
-                                    <h2 class="display-6 fw-bold" style="color: var(--accent);">{{ total_services|default(0) }}</h2>
-                                </div>
-                                <i class="fas fa-cogs stat-icon"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stat-card">
-                                <div>
-                                    <h6 class="text-muted mb-1">Contact Messages</h6>
-                                    <h2 class="display-6 fw-bold" style="color: var(--accent);">{{ total_contacts|default(0) }}</h2>
-                                </div>
-                                <i class="fas fa-envelope stat-icon"></i>
+                                <i class="fas fa-calendar-check fa-3x" style="color: var(--primary); opacity: 0.5;"></i>
                             </div>
                         </div>
                     </div>
 
-                    <h5 class="mt-5 mb-3 fw-bold"><i class="fas fa-history me-2"></i> Recent Bookings</h5>
+                    <h5 class="mt-5 mb-3 fw-bold">Recent Bookings</h5>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
                                     <th>Booking ID</th>
                                     <th>Customer</th>
+                                    <th>📱 Phone</th>
                                     <th>Event Date</th>
+                                    <th>💳 Payment</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for b in recent_bookings|default([]) %}
                                 <tr>
-                                    <td><span class="fw-bold">{{ b.booking_id|default('N/A') }}</span></td>
+                                    <td>{{ b.booking_id|default('N/A') }}</td>
                                     <td>{{ b.full_name|default('N/A') }}</td>
+                                    <td><span class="badge bg-secondary">{{ b.phone|default('N/A') }}</span></td>
                                     <td>{{ b.event_date|default('N/A') }}</td>
+                                    <td><span class="badge bg-info">{{ b.payment_method|default('N/A')|upper }}</span></td>
                                     <td>₹{{ b.total_amount|default(0) }}</td>
                                     <td>
-                                        <span class="badge bg-{{ 'success' if b.status == 'confirmed' else 'warning' if b.status == 'pending' else 'danger' if b.status == 'cancelled' else 'secondary' }}">
+                                        <span class="badge bg-{{ 'success' if b.status == 'confirmed' else 'warning' }}">
                                             {{ b.status|default('pending') }}
                                         </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="showBookingDetail('{{ b.booking_id|default('') }}')">
-                                            <i class="fas fa-eye"></i> View
-                                        </button>
                                     </td>
                                 </tr>
                                 {% else %}
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">No bookings yet.</td>
+                                    <td colspan="7" class="text-center py-4">No bookings yet.</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -292,51 +170,42 @@
                     </div>
                 </div>
 
-                <!-- ========== BOOKINGS SECTION ========== -->
+                <!-- BOOKINGS SECTION -->
                 <div id="bookings-section" class="section-card" style="display: none;">
-                    <h4 class="section-title"><i class="fas fa-calendar-check me-2"></i> All Bookings</h4>
+                    <h4 class="mb-4"><i class="fas fa-calendar-check me-2"></i> All Bookings</h4>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Booking ID</th>
                                     <th>Customer</th>
+                                    <th>📱 Phone</th>
+                                    <th>Email</th>
                                     <th>Event Date</th>
-                                    <th>Event Type</th>
+                                    <th>💳 Payment</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for b in all_bookings|default([]) %}
                                 <tr>
-                                    <td>{{ b.id|default('') }}</td>
-                                    <td><span class="fw-bold">{{ b.booking_id|default('N/A') }}</span></td>
+                                    <td>{{ b.booking_id|default('N/A') }}</td>
                                     <td>{{ b.full_name|default('N/A') }}</td>
+                                    <td><span class="badge bg-secondary">{{ b.phone|default('N/A') }}</span></td>
+                                    <td>{{ b.email|default('N/A') }}</td>
                                     <td>{{ b.event_date|default('N/A') }}</td>
-                                    <td>{{ b.event_type|replace('-', ' ')|title if b.event_type else 'N/A' }}</td>
+                                    <td><span class="badge bg-info">{{ b.payment_method|default('N/A')|upper }}</span></td>
                                     <td>₹{{ b.total_amount|default(0) }}</td>
                                     <td>
-                                        <form method="POST" action="{{ url_for('admin_update_booking', id=b.id) if b.id else '#' }}" style="display: inline;">
-                                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()" style="width: 120px;" {% if not b.id %}disabled{% endif %}>
-                                                <option value="pending" {% if b.status == 'pending' %}selected{% endif %}>Pending</option>
-                                                <option value="confirmed" {% if b.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
-                                                <option value="completed" {% if b.status == 'completed' %}selected{% endif %}>Completed</option>
-                                                <option value="cancelled" {% if b.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
-                                            </select>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-info" onclick="alert('Booking: {{ b.booking_id|default('N/A') }}\nCustomer: {{ b.full_name|default('N/A') }}\nEmail: {{ b.email|default('N/A') }}\nPhone: {{ b.phone|default('N/A') }}\nVenue: {{ b.venue_address|default('N/A') }}\nRequests: {{ b.special_requests|default('None') }}')">
-                                            <i class="fas fa-info-circle"></i>
-                                        </button>
+                                        <span class="badge bg-{{ 'success' if b.status == 'confirmed' else 'warning' }}">
+                                            {{ b.status|default('pending') }}
+                                        </span>
                                     </td>
                                 </tr>
                                 {% else %}
                                 <tr>
-                                    <td colspan="8" class="text-center text-muted py-4">No bookings found.</td>
+                                    <td colspan="8" class="text-center py-4">No bookings found.</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -344,29 +213,26 @@
                     </div>
                 </div>
 
-                <!-- ========== USERS SECTION ========== -->
+                <!-- USERS SECTION -->
                 <div id="users-section" class="section-card" style="display: none;">
-                    <h4 class="section-title"><i class="fas fa-users me-2"></i> All Users</h4>
+                    <h4 class="mb-4"><i class="fas fa-users me-2"></i> All Users</h4>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>📱 Phone</th>
                                     <th>Registered</th>
                                     <th>Admin</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for u in all_users|default([]) %}
                                 <tr>
-                                    <td>{{ u.id|default('') }}</td>
                                     <td>{{ u.username|default('N/A') }}</td>
                                     <td>{{ u.email|default('N/A') }}</td>
-                                    <td>{{ u.phone|default('N/A') }}</td>
+                                    <td><span class="badge bg-secondary">{{ u.phone|default('N/A') }}</span></td>
                                     <td>{{ u.created_at.strftime('%d-%m-%Y') if u.created_at else 'N/A' }}</td>
                                     <td>
                                         {% if u.is_admin %}
@@ -375,167 +241,10 @@
                                             <span class="badge bg-secondary">No</span>
                                         {% endif %}
                                     </td>
-                                    <td>
-                                        {% if u.id and u.id != session.get('user_id') %}
-                                            <a href="{{ url_for('admin_toggle_user_admin', id=u.id) }}" class="btn btn-sm btn-warning" onclick="return confirm('Toggle admin status for {{ u.username }}?')">
-                                                <i class="fas fa-user-{{ 'minus' if u.is_admin else 'plus' }}"></i> Toggle
-                                            </a>
-                                        {% elif u.id == session.get('user_id') %}
-                                            <span class="text-muted">You</span>
-                                        {% else %}
-                                            <span class="text-muted">N/A</span>
-                                        {% endif %}
-                                    </td>
                                 </tr>
                                 {% else %}
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted py-4">No users found.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- ========== SERVICES SECTION ========== -->
-                <div id="services-section" class="section-card" style="display: none;">
-                    <h4 class="section-title"><i class="fas fa-cogs me-2"></i> Services Management</h4>
-                    
-                    <!-- Add Service Form -->
-                    <div class="card mb-4 border-0 shadow-sm">
-                        <div class="card-header bg-primary text-white py-3">
-                            <i class="fas fa-plus-circle me-2"></i> Add New Service
-                        </div>
-                        <div class="card-body">
-                            <form method="POST" action="{{ url_for('admin_add_service') }}" class="row g-3">
-                                <div class="col-md-3">
-                                    <input type="text" name="name" class="form-control" placeholder="Service Name" required>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="number" name="price" class="form-control" placeholder="Price (₹)" step="0.01" required>
-                                </div>
-                                <div class="col-md-2">
-                                    <select name="category" class="form-select">
-                                        <option value="wedding">Wedding</option>
-                                        <option value="birthday">Birthday</option>
-                                        <option value="corporate">Corporate</option>
-                                        <option value="anniversary">Anniversary</option>
-                                        <option value="baby-shower">Baby Shower</option>
-                                        <option value="festival">Festival</option>
-                                        <option value="car">Car</option>
-                                        <option value="murti">Murti</option>
-                                        <option value="inauguration">Opening</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" name="image_url" class="form-control" placeholder="Image URL (optional)">
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-success w-100">
-                                        <i class="fas fa-save"></i> Add
-                                    </button>
-                                </div>
-                                <div class="col-12">
-                                    <textarea name="description" class="form-control" placeholder="Description (optional)" rows="2"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Services Table -->
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for s in all_services|default([]) %}
-                                <tr>
-                                    <td>{{ s.id|default('') }}</td>
-                                    <td>{{ s.name|default('N/A') }}</td>
-                                    <td>₹{{ s.price|default(0) }}</td>
-                                    <td>{{ s.category|title if s.category else 'N/A' }}</td>
-                                    <td>
-                                        {% if s.is_active %}
-                                            <span class="badge bg-success">Active</span>
-                                        {% else %}
-                                            <span class="badge bg-danger">Inactive</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{{ url_for('admin_toggle_service', id=s.id) if s.id else '#' }}" class="btn btn-sm btn-{{ 'warning' if s.is_active else 'success' }}" onclick="return confirm('Toggle status for {{ s.name }}?')">
-                                            <i class="fas fa-toggle-{{ 'on' if s.is_active else 'off' }}"></i> {{ 'Deactivate' if s.is_active else 'Activate' }}
-                                        </a>
-                                        <a href="{{ url_for('admin_delete_service', id=s.id) if s.id else '#' }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete {{ s.name }} permanently?')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">No services added.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- ========== CONTACTS SECTION ========== -->
-                <div id="contacts-section" class="section-card" style="display: none;">
-                    <h4 class="section-title"><i class="fas fa-envelope me-2"></i> Contact Messages</h4>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Subject</th>
-                                    <th>Message</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for c in all_contacts|default([]) %}
-                                <tr>
-                                    <td>{{ c.id|default('') }}</td>
-                                    <td>{{ c.name|default('N/A') }}</td>
-                                    <td>{{ c.email|default('N/A') }}</td>
-                                    <td>{{ c.phone|default('-') }}</td>
-                                    <td>{{ c.subject|default('No Subject') }}</td>
-                                    <td>{{ c.message[:50] }}{% if c.message|length > 50 %}...{% endif %}</td>
-                                    <td>{{ c.created_at.strftime('%d-%m-%Y %H:%M') if c.created_at else 'N/A' }}</td>
-                                    <td>
-                                        {% if c.is_read %}
-                                            <span class="badge bg-success">Read</span>
-                                        {% else %}
-                                            <span class="badge bg-warning">New</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{{ url_for('admin_contact_mark_read', id=c.id) if c.id else '#' }}" class="btn btn-sm btn-outline-success">
-                                            <i class="fas fa-check"></i>
-                                        </a>
-                                        <a href="{{ url_for('admin_contact_delete', id=c.id) if c.id else '#' }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this message?')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% else %}
-                                <tr>
-                                    <td colspan="9" class="text-center text-muted py-4">No contact messages yet.</td>
+                                    <td colspan="5" class="text-center py-4">No users found.</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -546,41 +255,23 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ========== IMPROVED SECTION TOGGLE ==========
         function showSection(section) {
-            // Hide ALL elements whose ID ends with '-section' (no hardcoded list)
             document.querySelectorAll('[id$="-section"]').forEach(el => {
                 el.style.display = 'none';
             });
-
-            // Show selected section
-            const showEl = document.getElementById(section + '-section');
-            if (showEl) showEl.style.display = 'block';
-
-            // Update active class ONLY on section-toggle links (those with id="link-...")
-            document.querySelectorAll('.sidebar .nav-link[id^="link-"]').forEach(link => {
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
                 link.classList.remove('active');
             });
-            const activeLink = document.getElementById('link-' + section);
-            if (activeLink) activeLink.classList.add('active');
+            document.getElementById('link-' + section).classList.add('active');
         }
 
-        // ========== BOOKING DETAIL ALERT ==========
-        function showBookingDetail(bookingId) {
-            if (bookingId && bookingId !== 'N/A' && bookingId !== '') {
-                alert('📋 Booking ID: ' + bookingId + '\nFull details are available in the "Bookings" section.');
-            } else {
-                alert('No booking selected.');
-            }
-        }
-
-        // ========== PAGE LOAD ==========
-        // Use event listener instead of window.onload to avoid overwriting
         document.addEventListener('DOMContentLoaded', function() {
             showSection('dashboard');
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

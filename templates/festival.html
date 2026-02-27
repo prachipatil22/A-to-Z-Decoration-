@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>A to Z Decorators – Festival Decorations</title>
+    <title>A to Z Decorators – Festival Decoration</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts - Modern 2026 fonts: Clash Display & Satoshi -->
+    <!-- Google Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
     <!-- AOS animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         /* ========== MODERN 2026 DESIGN – A to Z Decorators ========== */
-        /* ----- Entire CSS from your index.html ----- */
+        /* ----- Entire CSS (same as before) ----- */
         :root {
             --primary: #8a6fe8;
             --primary-light: #b7a4ff;
@@ -1147,9 +1147,9 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 hero-content">
-                    <span class="hero-badge"><i class="fas fa-crown me-2"></i>Celebrate Festivals with Us</span>
-                    <h1 class="hero-title"><span>Festival</span> Decorations<br>Bring <span>Joy & Colors</span></h1>
-                    <p class="hero-text">Diwali, Christmas, Holi, Ganesh Chaturthi – traditional & modern themes for your home, office, or community.</p>
+                    <span class="hero-badge"><i class="fas fa-holi me-2"></i>Festival Special</span>
+                    <h1 class="hero-title"><span>Festival</span> Decorations<br>Celebrate with <span>Colors</span></h1>
+                    <p class="hero-text">Diwali, Holi, Dussehra, Eid, Christmas, Ganesh Chaturthi, Gudi Padwa, Rakshabandhan, Navratri, Janmashtami, Mahashivratri, Onam – we decorate for every Indian festival.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <button class="btn-book" onclick="showBookingModal()"><i class="fas fa-calendar-check me-2"></i>Book Now</button>
                         <a href="#festival-packages" class="btn-outline-book"><i class="fas fa-eye me-2"></i>View Packages</a>
@@ -1168,166 +1168,206 @@
         </div>
     </section>
 
-    <!-- ======= Festival Packages Sections ======= -->
+    <!-- ======= Festival Packages – 12 Festivals ======= -->
     <section id="festival-packages" class="services-section">
         <div class="container py-4">
             <div class="text-center mb-5">
                 <span class="hero-badge glass-morphism">Festival Special</span>
-                <h2 class="display-5 fw-bold mt-3">Our Festival Packages</h2>
-                <p class="text-soft">Diwali · Christmas · Holi · Ganesh Chaturthi · Navratri</p>
+                <h2 class="display-5 fw-bold mt-3">Our Festival Decoration Packages</h2>
+                <p class="text-soft">Choose your festival – we create the perfect ambiance</p>
             </div>
 
-            <!-- ========== Diwali Section ========== -->
-            <div class="mb-5" data-aos="fade-up">
-                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🪔 Diwali Decor</h3>
-                <div class="row g-4">
-                    <!--  Diwali -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/ffdab9/944c3e?text=Basic+Diwali&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title"> Diwali</h5>
-                                <p>Rangoli, diyas, marigold garlands, simple lighting.</p>
-                                <div class="service-price">₹6,000</div>
-                                <div class="price-toggle" id="toggle-diwali-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('diwali-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('diwali-basic', 'custom')">Custom</button></div>
-                                <div id="fixed-diwali-basic"></div>
-                                <div id="custom-diwali-basic" class="custom-price" style="display:none;"><input type="number" id="diwali-basic-custom" class="form-control" min="4000" placeholder="Min ₹4,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('diwali-basic', 'Basic Diwali Decor', 6000)">Add to Cart</button>
-                            </div>
+            <!-- Row 1: Diwali, Holi, Dussehra -->
+            <div class="row g-4 mb-4">
+                <!-- Diwali -->
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Diwali</span><img src="https://fakeimg.pl/600x400/ffcc80/bf4d3e?text=Diwali+Decor&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Diwali Decoration</h5>
+                            <p>Rangoli, diyas, flower garlands, torans, and festive lighting for your home or office.</p>
+                            <div class="service-price">₹6,000</div>
+                            <div class="price-toggle" id="toggle-festival-diwali"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-diwali', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-diwali', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-diwali"></div>
+                            <div id="custom-festival-diwali" class="custom-price" style="display:none;"><input type="number" id="festival-diwali-custom" class="form-control" min="4000" placeholder="Min ₹4,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-diwali', 'Diwali Decoration', 6000)">Add to Cart</button>
                         </div>
                     </div>
-                    <!--   Makar Sankranti	 -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/ffc9a4/944c3e?text=Premium+Diwali&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">  Makar Sankranti	</h5>
-                                <p>Floral toran, elaborate rangoli, lanterns, LED lights.</p>
-                                <div class="service-price">₹10,000</div>
-                                <div class="price-toggle" id="toggle-diwali-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('diwali-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('diwali-premium', 'custom')">Custom</button></div>
-                                <div id="fixed-diwali-premium"></div>
-                                <div id="custom-diwali-premium" class="custom-price" style="display:none;"><input type="number" id="diwali-premium-custom" class="form-control" min="7000" placeholder="Min ₹7,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('diwali-premium', 'Premium Diwali Decor', 10000)">Add to Cart</button>
-                            </div>
+                </div>
+                <!-- Holi -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="50">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Holi</span><img src="https://fakeimg.pl/600x400/ffab91/bf4d3e?text=Holi+Decor&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Holi Decoration</h5>
+                            <p>Colorful drapes, flower petals, pichkari decor, and festive rangoli for Holi celebration.</p>
+                            <div class="service-price">₹5,000</div>
+                            <div class="price-toggle" id="toggle-festival-holi"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-holi', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-holi', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-holi"></div>
+                            <div id="custom-festival-holi" class="custom-price" style="display:none;"><input type="number" id="festival-holi-custom" class="form-control" min="3500" placeholder="Min ₹3,500"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-holi', 'Holi Decoration', 5000)">Add to Cart</button>
                         </div>
                     </div>
-                    <!--  Raksha Bandhan-->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/ffb68c/944c3e?text=Luxury+Diwali&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">Raksha Bandhan</h5>
-                                <p>Theme-based decor, grand entrance, chandeliers, live flower arrangements.</p>
-                                <div class="service-price">₹18,000</div>
-                                <div class="price-toggle" id="toggle-diwali-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('diwali-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('diwali-luxury', 'custom')">Custom</button></div>
-                                <div id="fixed-diwali-luxury"></div>
-                                <div id="custom-diwali-luxury" class="custom-price" style="display:none;"><input type="number" id="diwali-luxury-custom" class="form-control" min="12000" placeholder="Min ₹12,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('diwali-luxury', 'Luxury Diwali Decor', 18000)">Add to Cart</button>
-                            </div>
+                </div>
+                <!-- Dussehra -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Dussehra</span><img src="https://fakeimg.pl/600x400/ffb74d/bf4d3e?text=Dussehra+Decor&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Dussehra Decoration</h5>
+                            <p>Ravan effigy backdrop, floral arrangements, traditional torans and lamps.</p>
+                            <div class="service-price">₹5,500</div>
+                            <div class="price-toggle" id="toggle-festival-dussehra"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-dussehra', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-dussehra', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-dussehra"></div>
+                            <div id="custom-festival-dussehra" class="custom-price" style="display:none;"><input type="number" id="festival-dussehra-custom" class="form-control" min="4000" placeholder="Min ₹4,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-dussehra', 'Dussehra Decoration', 5500)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ========== Christmas Section ========== -->
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
-                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🎄 Christmas Decor</h3>
-                <div class="row g-4">
-                    <!-- Basic Christmas -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/d4e6f1/1f4c5c?text=Basic+Christmas&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">Basic Christmas</h5>
-                                <p>Small tree, ornaments, fairy lights, wreath.</p>
-                                <div class="service-price">₹5,000</div>
-                                <div class="price-toggle" id="toggle-xmas-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('xmas-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('xmas-basic', 'custom')">Custom</button></div>
-                                <div id="fixed-xmas-basic"></div>
-                                <div id="custom-xmas-basic" class="custom-price" style="display:none;"><input type="number" id="xmas-basic-custom" class="form-control" min="3000" placeholder="Min ₹3,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('xmas-basic', 'Basic Christmas Decor', 5000)">Add to Cart</button>
-                            </div>
+            <!-- Row 2: Eid, Christmas, Ganesh Chaturthi -->
+            <div class="row g-4 mb-4">
+                <!-- Eid -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Eid</span><img src="https://fakeimg.pl/600x400/c5e1a5/2e7d32?text=Eid+Decor&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Eid Decoration</h5>
+                            <p>Moon and star motifs, elegant drapes, candles, and festive lights.</p>
+                            <div class="service-price">₹6,500</div>
+                            <div class="price-toggle" id="toggle-festival-eid"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-eid', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-eid', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-eid"></div>
+                            <div id="custom-festival-eid" class="custom-price" style="display:none;"><input type="number" id="festival-eid-custom" class="form-control" min="4500" placeholder="Min ₹4,500"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-eid', 'Eid Decoration', 6500)">Add to Cart</button>
                         </div>
                     </div>
-                    <!-- Ganesh Chaturthi -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b7d4e6/1f4c5c?text=Premium+Christmas&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">Ganesh Chaturthi</h5>
-                                <p>Large tree, themed ornaments, light curtains, Santa setup.</p>
-                                <div class="service-price">₹9,000</div>
-                                <div class="price-toggle" id="toggle-xmas-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('xmas-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('xmas-premium', 'custom')">Custom</button></div>
-                                <div id="fixed-xmas-premium"></div>
-                                <div id="custom-xmas-premium" class="custom-price" style="display:none;"><input type="number" id="xmas-premium-custom" class="form-control" min="6000" placeholder="Min ₹6,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('xmas-premium', 'Premium Christmas Decor', 9000)">Add to Cart</button>
-                            </div>
+                </div>
+                <!-- Christmas -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Christmas</span><img src="https://fakeimg.pl/600x400/ff8a80/bf4d3e?text=Christmas+Decor&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Christmas Decoration</h5>
+                            <p>Christmas tree, fairy lights, wreaths, Santa setup, and star decorations.</p>
+                            <div class="service-price">₹7,000</div>
+                            <div class="price-toggle" id="toggle-festival-christmas"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-christmas', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-christmas', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-christmas"></div>
+                            <div id="custom-festival-christmas" class="custom-price" style="display:none;"><input type="number" id="festival-christmas-custom" class="form-control" min="5000" placeholder="Min ₹5,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-christmas', 'Christmas Decoration', 7000)">Add to Cart</button>
                         </div>
                     </div>
-                    <!--Rama Navami -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9abfd9/1f4c5c?text=Luxury+Christmas&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">Rama Navami</h5>
-                                <p>Life-sized tree, snowfall effects, themed backdrop, gift corner.</p>
-                                <div class="service-price">₹15,000</div>
-                                <div class="price-toggle" id="toggle-xmas-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('xmas-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('xmas-luxury', 'custom')">Custom</button></div>
-                                <div id="fixed-xmas-luxury"></div>
-                                <div id="custom-xmas-luxury" class="custom-price" style="display:none;"><input type="number" id="xmas-luxury-custom" class="form-control" min="10000" placeholder="Min ₹10,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('xmas-luxury', 'Luxury Christmas Decor', 15000)">Add to Cart</button>
-                            </div>
+                </div>
+                <!-- Ganesh Chaturthi -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="250">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Ganesh Chaturthi</span><img src="https://fakeimg.pl/600x400/f9a825/bf4d3e?text=Ganesh+Chaturthi&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Ganesh Chaturthi</h5>
+                            <p>Ganesh murti backdrop, floral decorations, torans, and traditional setup.</p>
+                            <div class="service-price">₹8,000</div>
+                            <div class="price-toggle" id="toggle-festival-ganesh"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-ganesh', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-ganesh', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-ganesh"></div>
+                            <div id="custom-festival-ganesh" class="custom-price" style="display:none;"><input type="number" id="festival-ganesh-custom" class="form-control" min="6000" placeholder="Min ₹6,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-ganesh', 'Ganesh Chaturthi Decoration', 8000)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ========== Holi / Other Festivals Section ========== -->
-            <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🌈 Holi & Other Festivals</h3>
-                <div class="row g-4">
-                    <!--  Holi -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/f8d9b0/c94f4f?text=Basic+Holi&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">Holi</h5>
-                                <p>Color powders setup, water balloons, simple music.</p>
-                                <div class="service-price">₹4,000</div>
-                                <div class="price-toggle" id="toggle-holi-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('holi-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('holi-basic', 'custom')">Custom</button></div>
-                                <div id="fixed-holi-basic"></div>
-                                <div id="custom-holi-basic" class="custom-price" style="display:none;"><input type="number" id="holi-basic-custom" class="form-control" min="2500" placeholder="Min ₹2,500"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('holi-basic', 'Basic Holi Decor', 4000)">Add to Cart</button>
-                            </div>
+            <!-- Row 3: Gudi Padwa, Rakshabandhan, Navratri -->
+            <div class="row g-4 mb-4">
+                <!-- Gudi Padwa -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Gudi Padwa</span><img src="https://fakeimg.pl/600x400/ffb347/bf4d3e?text=Gudi+Padwa&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Gudi Padwa Decoration</h5>
+                            <p>Gudi setup, rangoli, flower torans, and traditional Marathi New Year decor.</p>
+                            <div class="service-price">₹4,500</div>
+                            <div class="price-toggle" id="toggle-festival-gudipadwa"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-gudipadwa', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-gudipadwa', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-gudipadwa"></div>
+                            <div id="custom-festival-gudipadwa" class="custom-price" style="display:none;"><input type="number" id="festival-gudipadwa-custom" class="form-control" min="3000" placeholder="Min ₹3,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-gudipadwa', 'Gudi Padwa Decoration', 4500)">Add to Cart</button>
                         </div>
                     </div>
-                    <!-- Rebpublic Day -->
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/f5c1a0/c94f4f?text=Premium+Holi&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">Republic Day</h5>
-                                <p>Color stations, organic colors, DJ setup, photo booth.</p>
-                                <div class="service-price">₹7,000</div>
-                                <div class="price-toggle" id="toggle-holi-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('holi-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('holi-premium', 'custom')">Custom</button></div>
-                                <div id="fixed-holi-premium"></div>
-                                <div id="custom-holi-premium" class="custom-price" style="display:none;"><input type="number" id="holi-premium-custom" class="form-control" min="5000" placeholder="Min ₹5,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('holi-premium', 'Premium Holi Decor', 7000)">Add to Cart</button>
-                            </div>
+                </div>
+                <!-- Rakshabandhan -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="350">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Rakshabandhan</span><img src="https://fakeimg.pl/600x400/ffaa80/bf4d3e?text=Rakshabandhan&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Rakshabandhan Decoration</h5>
+                            <p>Rakhi thali decor, floral backdrop, rangoli, and festive lighting.</p>
+                            <div class="service-price">₹4,000</div>
+                            <div class="price-toggle" id="toggle-festival-raksha"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-raksha', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-raksha', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-raksha"></div>
+                            <div id="custom-festival-raksha" class="custom-price" style="display:none;"><input type="number" id="festival-raksha-custom" class="form-control" min="2500" placeholder="Min ₹2,500"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-raksha', 'Rakshabandhan Decoration', 4000)">Add to Cart</button>
                         </div>
                     </div>
-                    <!--Independence Day--> 
-                    <div class="col-md-4">
-                        <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/f2b08f/c94f4f?text=Luxury+Holi&font=lobster" class="service-card-img"></div>
-                            <div class="service-card-body">
-                                <h5 class="service-title">independence Day</h5>
-                                <p>Complete theme decor, professional sound, live performers, floral arrangements.</p>
-                                <div class="service-price">₹12,000</div>
-                                <div class="price-toggle" id="toggle-holi-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('holi-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('holi-luxury', 'custom')">Custom</button></div>
-                                <div id="fixed-holi-luxury"></div>
-                                <div id="custom-holi-luxury" class="custom-price" style="display:none;"><input type="number" id="holi-luxury-custom" class="form-control" min="8000" placeholder="Min ₹8,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('holi-luxury', 'Luxury Festival Decor', 12000)">Add to Cart</button>
-                            </div>
+                </div>
+                <!-- Navratri -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Navratri</span><img src="https://fakeimg.pl/600x400/ff9966/bf4d3e?text=Navratri&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Navratri Decoration</h5>
+                            <p>Garba ground decor, stage setup, floral arches, and colorful drapes.</p>
+                            <div class="service-price">₹9,000</div>
+                            <div class="price-toggle" id="toggle-festival-navratri"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-navratri', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-navratri', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-navratri"></div>
+                            <div id="custom-festival-navratri" class="custom-price" style="display:none;"><input type="number" id="festival-navratri-custom" class="form-control" min="7000" placeholder="Min ₹7,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-navratri', 'Navratri Decoration', 9000)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4: Janmashtami, Mahashivratri, Onam -->
+            <div class="row g-4">
+                <!-- Janmashtami -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="450">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Janmashtami</span><img src="https://fakeimg.pl/600x400/ffcc99/bf4d3e?text=Janmashtami&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Janmashtami Decoration</h5>
+                            <p>Cradle decor, peacock feathers, floral backdrop, and Krishna theme setup.</p>
+                            <div class="service-price">₹6,500</div>
+                            <div class="price-toggle" id="toggle-festival-janmashtami"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-janmashtami', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-janmashtami', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-janmashtami"></div>
+                            <div id="custom-festival-janmashtami" class="custom-price" style="display:none;"><input type="number" id="festival-janmashtami-custom" class="form-control" min="4500" placeholder="Min ₹4,500"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-janmashtami', 'Janmashtami Decoration', 6500)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mahashivratri -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Mahashivratri</span><img src="https://fakeimg.pl/600x400/cc9966/bf4d3e?text=Mahashivratri&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Mahashivratri Decoration</h5>
+                            <p>Shiva linga backdrop, bilva leaves, diyas, and spiritual decor.</p>
+                            <div class="service-price">₹5,500</div>
+                            <div class="price-toggle" id="toggle-festival-shivratri"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-shivratri', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-shivratri', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-shivratri"></div>
+                            <div id="custom-festival-shivratri" class="custom-price" style="display:none;"><input type="number" id="festival-shivratri-custom" class="form-control" min="4000" placeholder="Min ₹4,000"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-shivratri', 'Mahashivratri Decoration', 5500)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Onam -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="550">
+                    <div class="service-card">
+                        <div class="card-img-wrapper"><span class="service-badge">Onam</span><img src="https://fakeimg.pl/600x400/ffd699/bf4d3e?text=Onam&font=lobster" class="service-card-img"></div>
+                        <div class="service-card-body">
+                            <h5 class="service-title">Onam Decoration</h5>
+                            <p>Pookalam (floral rangoli), banana leaves, traditional lamps, and festive setup.</p>
+                            <div class="service-price">₹7,500</div>
+                            <div class="price-toggle" id="toggle-festival-onam"><button class="btn btn-outline-primary active" onclick="setPriceMode('festival-onam', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('festival-onam', 'custom')">Custom</button></div>
+                            <div id="fixed-festival-onam"></div>
+                            <div id="custom-festival-onam" class="custom-price" style="display:none;"><input type="number" id="festival-onam-custom" class="form-control" min="5500" placeholder="Min ₹5,500"></div>
+                            <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('festival-onam', 'Onam Decoration', 7500)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -1335,7 +1375,7 @@
         </div>
     </section>
 
-    <!-- ======= ABOUT SECTION (same as birthday.html) ======= -->
+    <!-- ======= ABOUT SECTION (same as other pages) ======= -->
     <section id="about" class="about-hero">
         <div class="container">
             <div class="row align-items-center g-5">
@@ -1360,7 +1400,7 @@
         </div>
     </section>
 
-    <!-- all decoration types tags (links to other category pages) -->
+    <!-- all decoration types tags -->
     <div class="container" data-aos="fade-up">
         <div class="service-tags justify-content-center">
             <a href="wedding.html" class="service-tag"><i class="bi bi-heart"></i> Wedding</a>
@@ -1424,27 +1464,33 @@
     <!-- CTA section -->
     <div class="container">
         <div class="cta-section text-center" data-aos="zoom-in">
-            <h2 style="font-size: 2.5rem;">Let's Make Your Festival Unforgettable!</h2>
-            <p class="lead my-4">From Diwali to Christmas, we create magical festive experiences.</p>
+            <h2 style="font-size: 2.5rem;">Celebrate Every Festival with Us!</h2>
+            <p class="lead my-4">From Diwali to Onam, we create the perfect festive ambiance.</p>
             <a href="#contact" class="btn btn-custom btn-lg"><i class="bi bi-telephone"></i> Contact Us Today</a>
         </div>
     </div>
 
-    <!-- ======= Gallery Section (optional) ======= -->
+    <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery-section">
         <div class="container py-4">
             <div class="text-center mb-5">
                 <span class="hero-badge glass-morphism">Our Festival Portfolio</span>
                 <h2 class="display-5 fw-bold mt-3">Captured Moments</h2>
-                <p class="text-soft">Explore our finest festival decoration works</p>
+                <p class="text-soft">Explore our finest festival decorations</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffdab9/944c3e?text=Diwali+Rangoli" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Diwali Rangoli</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/d4e6f1/1f4c5c?text=Christmas+Tree" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Christmas Tree</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/f8d9b0/c94f4f?text=Holi+Celebration" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Holi Celebration</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/fae1b9/8b5a3c?text=Ganesh+Idol" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Ganesh Idol</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffc9a4/944c3e?text=Navratri+Garba" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Navratri Garba</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/b7d4e6/1f4c5c?text=New+Year+Eve" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>New Year Eve</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffcc80/bf4d3e?text=Diwali" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Diwali</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffab91/bf4d3e?text=Holi" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Holi</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffb74d/bf4d3e?text=Dussehra" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Dussehra</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/c5e1a5/2e7d32?text=Eid" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Eid</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ff8a80/bf4d3e?text=Christmas" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Christmas</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/f9a825/bf4d3e?text=Ganesh+Chaturthi" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Ganesh Chaturthi</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffb347/bf4d3e?text=Gudi+Padwa" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Gudi Padwa</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffaa80/bf4d3e?text=Rakshabandhan" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Rakshabandhan</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ff9966/bf4d3e?text=Navratri" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Navratri</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffcc99/bf4d3e?text=Janmashtami" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Janmashtami</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/cc9966/bf4d3e?text=Mahashivratri" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Mahashivratri</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/ffd699/bf4d3e?text=Onam" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Onam</span></div></div></div>
             </div>
         </div>
     </section>
@@ -1499,7 +1545,7 @@
         </div>
     </footer>
 
-    <!-- ======= Booking Panel & Modals ======= -->
+    <!-- ======= Booking Panel & Modals (identical) ======= -->
     <div id="selected-items-panel" class="selected-items-panel glass-morphism"></div>
     <button id="global-book-now-btn" class="global-book-now-btn"><i class="fas fa-calendar-check me-2"></i>Complete Booking</button>
     <div id="notification" class="notification"></div>
@@ -1537,10 +1583,18 @@
                         <select id="event-type" class="form-control-custom" required>
                             <option value="">Select Event Type</option>
                             <option value="diwali">Diwali</option>
-                            <option value="christmas">Christmas</option>
                             <option value="holi">Holi</option>
+                            <option value="dussehra">Dussehra</option>
+                            <option value="eid">Eid</option>
+                            <option value="christmas">Christmas</option>
                             <option value="ganesh">Ganesh Chaturthi</option>
+                            <option value="gudipadwa">Gudi Padwa</option>
+                            <option value="rakshabandhan">Rakshabandhan</option>
                             <option value="navratri">Navratri</option>
+                            <option value="janmashtami">Janmashtami</option>
+                            <option value="mahashivratri">Mahashivratri</option>
+                            <option value="onam">Onam</option>
+                            <option value="other">Other Festival</option>
                         </select>
                     </div>
                     <div class="col-12 mb-3">
@@ -1629,14 +1683,14 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts (identical) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
         AOS.init({ duration: 800, once: true });
 
-        // ========== नवीन फंक्शन्स (from wedding.html) ==========
+        // ========== प्राइस मोड सेट करणे ==========
         function setPriceMode(service, mode) {
             let fixedDiv = document.getElementById('fixed-' + service);
             let customDiv = document.getElementById('custom-' + service);
@@ -1651,7 +1705,7 @@
             }
         }
 
-        // Add to Cart for festival page cards
+        // ========== Add to Cart ==========
         function addToCartWedding(service, displayName, fixedPrice) {
             let modeElem = document.querySelector('#toggle-' + service + ' .btn.active');
             let mode = modeElem ? modeElem.innerText.trim().toLowerCase() : 'fixed';
@@ -1673,17 +1727,49 @@
             document.getElementById('global-book-now-btn').style.display = 'flex';
         }
 
-        // ========== जुनी फंक्शन्स (copy from index.html) ==========
+        // ========== Global Variables ==========
         let selectedServices = [];
         let bookingData = {};
         let selectedPaymentOption = '';
 
+        // ========== DOM Ready ==========
         document.addEventListener('DOMContentLoaded', function() {
             let today = new Date().toISOString().split('T')[0];
             if (document.getElementById('event-date')) document.getElementById('event-date').min = today;
             document.getElementById('global-book-now-btn').addEventListener('click', showBookingModal);
+            
+            // Check login status
+            fetch('/api/check_login')
+                .then(response => response.json())
+                .then(data => {
+                    const authDiv = document.getElementById('auth-buttons');
+                    if (data.logged_in) {
+                        authDiv.innerHTML = `
+                            <span class="me-2" style="color:var(--text-dark);">Welcome, ${data.username}</span>
+                            <button class="btn-book" onclick="logout()" style="padding:8px 20px; font-size:1rem;">Logout</button>
+                        `;
+                    } else {
+                        authDiv.innerHTML = '';
+                    }
+                })
+                .catch(error => console.log('Login check failed'));
         });
 
+        // ========== Logout ==========
+        function logout() {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/';
+                }
+            });
+        }
+
+        // ========== Cart Management ==========
         function removeService(id) {
             selectedServices = selectedServices.filter(s => s.id !== id);
             updateSelectedItemsDisplay();
@@ -1763,34 +1849,78 @@
             element.classList.add('selected');
         }
 
+        // ========== REAL BOOKING with fetch ==========
         function processPayment() {
-            if (!selectedPaymentOption) { showNotification('Please select a payment method!', 'error'); return; }
+            if (!selectedPaymentOption) {
+                showNotification('Please select a payment method!', 'error');
+                return;
+            }
+
             let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
             let total = subtotal + (subtotal * 0.18);
+            
+            let paymentMethod = selectedPaymentOption;
             closePaymentModal();
+
+            let bookingDataToSend = {
+                full_name: bookingData.full_name,
+                email: bookingData.email,
+                phone: bookingData.phone,
+                event_date: bookingData.event_date,
+                event_type: bookingData.event_type,
+                venue_address: bookingData.venue_address,
+                special_requests: bookingData.special_requests || '',
+                payment_method: paymentMethod,
+                services: selectedServices.map(s => ({
+                    name: s.name,
+                    price: s.price,
+                    mode: s.mode || 'fixed'
+                })),
+                total_amount: total
+            };
+
             showNotification('Processing your booking...');
-            setTimeout(() => {
-                let bookingId = 'ADZ-' + Math.floor(Math.random() * 10000);
-                document.getElementById('booking-id').textContent = bookingId;
-                document.getElementById('receipt-event-date').textContent = bookingData.event_date;
-                document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
-                let paymentText = { cash: 'Cash', card: 'Card', online: 'Online' }[selectedPaymentOption] || selectedPaymentOption;
-                document.getElementById('receipt-payment-method').textContent = paymentText;
-                document.getElementById('receipt-total').textContent = total.toFixed(2);
-                let items = document.getElementById('receipt-items');
-                items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
-                let sTotal = 0;
-                selectedServices.forEach(s => {
-                    items.innerHTML += `<div class="d-flex justify-content-between small"><span>${s.name}</span><span>₹${s.price.toLocaleString()}</span></div>`;
-                    sTotal += s.price;
-                });
-                items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top"><span>GST (18%)</span><span>₹${(sTotal*0.18).toFixed(2)}</span></div>`;
-                document.getElementById('receiptModal').classList.add('active');
-                selectedServices = [];
-                updateSelectedItemsDisplay();
-                document.getElementById('global-book-now-btn').style.display = 'none';
-                showNotification('Booking confirmed! ID: ' + bookingId);
-            }, 1000);
+
+            fetch('/api/create_booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingDataToSend)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('booking-id').textContent = data.booking_id;
+                    document.getElementById('receipt-event-date').textContent = bookingData.event_date;
+                    document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
+                    
+                    let paymentText = { cash: 'Cash', card: 'Card', online: 'Online' }[paymentMethod] || paymentMethod;
+                    document.getElementById('receipt-payment-method').textContent = paymentText;
+                    document.getElementById('receipt-total').textContent = total.toFixed(2);
+                    
+                    let items = document.getElementById('receipt-items');
+                    items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
+                    let sTotal = 0;
+                    selectedServices.forEach(s => {
+                        items.innerHTML += `<div class="d-flex justify-content-between small"><span>${s.name}</span><span>₹${s.price.toLocaleString()}</span></div>`;
+                        sTotal += s.price;
+                    });
+                    items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top"><span>GST (18%)</span><span>₹${(sTotal*0.18).toFixed(2)}</span></div>`;
+                    
+                    document.getElementById('receiptModal').classList.add('active');
+                    
+                    selectedServices = [];
+                    bookingData = {};
+                    updateSelectedItemsDisplay();
+                    document.getElementById('global-book-now-btn').style.display = 'none';
+                    showNotification('Booking confirmed! ID: ' + data.booking_id);
+                } else {
+                    showNotification('Booking failed: ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
+            });
         }
 
         function closeReceiptModal() { document.getElementById('receiptModal').classList.remove('active'); }
@@ -1808,11 +1938,32 @@
 
         function submitContactForm(event) {
             event.preventDefault();
+            let contactData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
             showNotification('Sending message...');
-            setTimeout(() => {
-                showNotification('Message sent successfully!');
-                document.getElementById('contactForm').reset();
-            }, 1000);
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(contactData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message);
+                    document.getElementById('contactForm').reset();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
+            });
         }
 
         function showNotification(msg, type = 'success') {

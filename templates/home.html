@@ -1667,7 +1667,7 @@
                     <div class="team-card">
                         <img src="https://images.pexels.com/photos/2380794/pexels-photo-2380794.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Team Member" class="team-img">
                         <div class="team-info">
-                            <h5>Suresh Kale</h5>
+                            <h5>Ram  Kale</h5>
                             <span class="team-badge">Decoration Head</span>
                             <p class="mt-2">12 years | Murti & festival specialist</p>
                         </div>
@@ -1854,7 +1854,7 @@
                     <div class="contact-info-card">
                         <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                         <h4 class="fw-bold mb-3">Visit Us</h4>
-                        <p class="text-soft mb-1">Main Road, Jamner, Tal. Jamner</p>
+                        <p class="text-soft mb-1">Ashta Bhuja,Main Road Jamner, Bhusawal, Tal. Bhusawal</p>
                         <p class="text-soft">Dist. Jalgaon, Maharashtra - 424206</p>
                     </div>
                 </div>
@@ -2346,89 +2346,89 @@
         }
 
         function processPayment() {
-            if (!selectedPaymentOption) {
-                showNotification('Please select a payment method!', 'error');
-                return;
-            }
+    if (!selectedPaymentOption) {
+        showNotification('Please select a payment method!', 'error');
+        return;
+    }
 
-            let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
-            let total = subtotal + (subtotal * 0.18);
+    let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
+    let total = subtotal + (subtotal * 0.18);
+    
+    // payment method ची व्हॅल्यू आधी कॅप्चर कर
+    let paymentMethod = selectedPaymentOption;
+    
+    // डीबगसाठी - कन्सोलमध्ये बघ
+    console.log("💳 Payment method captured:", paymentMethod);
+
+    // आता मोडल बंद कर (यामुळे selectedPaymentOption रीसेट होईल, पण आपण व्हॅल्यू कॅप्चर केली आहे)
+    closePaymentModal();
+
+    let bookingDataToSend = {
+        full_name: bookingData.full_name,
+        email: bookingData.email,
+        phone: bookingData.phone,
+        event_date: bookingData.event_date,
+        event_type: bookingData.event_type,
+        venue_address: bookingData.venue_address,
+        special_requests: bookingData.special_requests || '',
+        payment_method: paymentMethod,   // कॅप्चर केलेली व्हॅल्यू वापर
+        services: selectedServices,
+        total_amount: total
+    };
+
+    console.log("📤 Sending booking data:", bookingDataToSend);
+    showNotification('Processing your booking...');
+
+    fetch('/api/create_booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingDataToSend)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("📥 Server response:", data);
+        if (data.success) {
+            document.getElementById('booking-id').textContent = data.booking_id;
+            document.getElementById('receipt-event-date').textContent = bookingData.event_date;
+            document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
             
-            closePaymentModal();
-
-            // बुकिंग डेटा तयार करा
-            let bookingDataToSend = {
-                full_name: bookingData.full_name,
-                email: bookingData.email,
-                phone: bookingData.phone,
-                event_date: bookingData.event_date,
-                event_type: bookingData.event_type,
-                venue_address: bookingData.venue_address,
-                special_requests: bookingData.special_requests || '',
-                guests: 50,
-                payment_method: selectedPaymentOption,
-                services: selectedServices,
-                total_amount: total
-            };
-
-            // Show loading notification
-            showNotification('Processing your booking...');
-
-            // बॅकएंडला API कॉल करा
-            fetch('/api/create_booking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(bookingDataToSend)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // रसीड दाखवा
-                    document.getElementById('booking-id').textContent = data.booking_id;
-                    document.getElementById('receipt-event-date').textContent = bookingData.event_date;
-                    document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
-                    
-                    let paymentText = {
-                        cash: 'Cash', 
-                        card: 'Card', 
-                        online: 'Online'
-                    }[selectedPaymentOption] || selectedPaymentOption;
-                    document.getElementById('receipt-payment-method').textContent = paymentText;
-                    document.getElementById('receipt-total').textContent = total.toFixed(2);
-                    
-                    let items = document.getElementById('receipt-items');
-                    items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
-                    let sTotal = 0;
-                    selectedServices.forEach(s => {
-                        items.innerHTML += `<div class="d-flex justify-content-between small">
-                                                <span>${s.name}</span>
-                                                <span>₹${s.price.toLocaleString()}</span>
-                                            </div>`;
-                        sTotal += s.price;
-                    });
-                    items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top">
-                                            <span>GST (18%)</span>
-                                            <span>₹${(sTotal*0.18).toFixed(2)}</span>
-                                        </div>`;
-                    
-                    document.getElementById('receiptModal').classList.add('active');
-                    
-                    // रीसेट करा
-                    selectedServices = [];
-                    updateSelectedItemsDisplay();
-                    document.getElementById('global-book-now-btn').style.display = 'none';
-                    showNotification('Booking confirmed! ID: ' + data.booking_id);
-                } else {
-                    showNotification('Booking failed: ' + data.message, 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('Server error! Please try again.', 'error');
+            let paymentText = {
+                cash: 'Cash', card: 'Card', online: 'Online'
+            }[paymentMethod] || paymentMethod;
+            document.getElementById('receipt-payment-method').textContent = paymentText;
+            document.getElementById('receipt-total').textContent = total.toFixed(2);
+            
+            let items = document.getElementById('receipt-items');
+            items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
+            let sTotal = 0;
+            selectedServices.forEach(s => {
+                items.innerHTML += `<div class="d-flex justify-content-between small">
+                                        <span>${s.name}</span>
+                                        <span>₹${s.price.toLocaleString()}</span>
+                                    </div>`;
+                sTotal += s.price;
             });
+            items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top">
+                                    <span>GST (18%)</span>
+                                    <span>₹${(sTotal*0.18).toFixed(2)}</span>
+                                </div>`;
+            
+            document.getElementById('receiptModal').classList.add('active');
+            
+            selectedServices = [];
+            bookingData = {};
+            updateSelectedItemsDisplay();
+            document.getElementById('global-book-now-btn').style.display = 'none';
+            showNotification('Booking confirmed! ID: ' + data.booking_id);
+        } else {
+            showNotification('Booking failed: ' + data.message, 'error');
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Server error! Please try again.', 'error');
+    });
+}
 
         function closeReceiptModal() {
             document.getElementById('receiptModal').classList.remove('active');

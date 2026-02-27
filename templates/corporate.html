@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts - Modern 2026 fonts: Clash Display & Satoshi -->
+    <!-- Google Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
     <!-- AOS animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -1147,9 +1147,9 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 hero-content">
-                    <span class="hero-badge"><i class="fas fa-crown me-2"></i>Professional Elegance</span>
-                    <h1 class="hero-title"><span>Corporate</span> Events<br>Impress with <span>Style</span></h1>
-                    <p class="hero-text">Conferences, product launches, annual galas – complete AV, branding, and stage setups.</p>
+                    <span class="hero-badge"><i class="fas fa-briefcase me-2"></i>Corporate Excellence</span>
+                    <h1 class="hero-title"><span>Corporate</span> Events<br>Professional <span>Decor</span></h1>
+                    <p class="hero-text">Conferences, product launches, annual galas – elegant and professional setups that impress.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <button class="btn-book" onclick="showBookingModal()"><i class="fas fa-calendar-check me-2"></i>Book Now</button>
                         <a href="#corporate-packages" class="btn-outline-book"><i class="fas fa-eye me-2"></i>View Packages</a>
@@ -1157,7 +1157,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="position-relative">
-                        <img src="https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="img-fluid hero-image" alt="Corporate Event Decoration">
+                        <img src="https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="img-fluid hero-image" alt="Corporate Event">
                         <div class="glass-morphism position-absolute bottom-0 end-0 p-4 rounded-4 m-4">
                             <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
                             <p class="mt-2 mb-0 fw-bold">4.9 ★ Trustpilot</p>
@@ -1168,165 +1168,156 @@
         </div>
     </section>
 
-    <!-- ======= Corporate Packages Sections ======= -->
+    <!-- ======= Corporate Packages ======= -->
     <section id="corporate-packages" class="services-section">
         <div class="container py-4">
             <div class="text-center mb-5">
                 <span class="hero-badge glass-morphism">Corporate Special</span>
                 <h2 class="display-5 fw-bold mt-3">Our Corporate Packages</h2>
-                <p class="text-soft">Conferences · Product Launches · Annual Galas</p>
+                <p class="text-soft">Conferences · Product Launches · Annual Galas · Seminars</p>
             </div>
 
-            <!-- ========== Conference / Seminar Section ========== -->
+            <!-- Conference & Meeting -->
             <div class="mb-5" data-aos="fade-up">
-                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🎤 Conference / Seminar</h3>
+                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">📊 Conference & Meeting</h3>
                 <div class="row g-4">
-                    <!-- Basic Conference -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/cfd9df/2e4b5c?text=Basic+Conference&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/d0e0e3/1f4c5c?text=Basic+Conference&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
                                 <h5 class="service-title">Basic Conference</h5>
-                                <p>Stage with backdrop, podium, basic sound system.</p>
-                                <div class="service-price">₹20,000</div>
-                                <div class="price-toggle" id="toggle-conference-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('conference-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('conference-basic', 'custom')">Custom</button></div>
-                                <div id="fixed-conference-basic"></div>
-                                <div id="custom-conference-basic" class="custom-price" style="display:none;"><input type="number" id="conference-basic-custom" class="form-control" min="15000" placeholder="Min ₹15,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('conference-basic', 'Basic Conference', 20000)">Add to Cart</button>
+                                <p>Stage backdrop, podium flower, basic lighting.</p>
+                                <div class="service-price">₹15,000</div>
+                                <div class="price-toggle" id="toggle-corp-conf-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-conf-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-conf-basic', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-conf-basic"></div>
+                                <div id="custom-corp-conf-basic" class="custom-price" style="display:none;"><input type="number" id="corp-conf-basic-custom" class="form-control" min="10000" placeholder="Min ₹10,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-conf-basic', 'Basic Conference', 15000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Premium Conference -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b7c9d4/2e4b5c?text=Premium+Conference&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b3d1d9/1f4c5c?text=Premium+Conference&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
                                 <h5 class="service-title">Premium Conference</h5>
-                                <p>LED screen, advanced sound, stage lighting, branding.</p>
-                                <div class="service-price">₹35,000</div>
-                                <div class="price-toggle" id="toggle-conference-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('conference-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('conference-premium', 'custom')">Custom</button></div>
-                                <div id="fixed-conference-premium"></div>
-                                <div id="custom-conference-premium" class="custom-price" style="display:none;"><input type="number" id="conference-premium-custom" class="form-control" min="25000" placeholder="Min ₹25,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('conference-premium', 'Premium Conference', 35000)">Add to Cart</button>
+                                <p>Full stage setup, branded backdrop, floral arrangements, professional lighting.</p>
+                                <div class="service-price">₹25,000</div>
+                                <div class="price-toggle" id="toggle-corp-conf-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-conf-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-conf-premium', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-conf-premium"></div>
+                                <div id="custom-corp-conf-premium" class="custom-price" style="display:none;"><input type="number" id="corp-conf-premium-custom" class="form-control" min="18000" placeholder="Min ₹18,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-conf-premium', 'Premium Conference', 25000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Luxury Conference -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9fb8c7/2e4b5c?text=Luxury+Conference&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9dc1cc/1f4c5c?text=Luxury+Conference&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
                                 <h5 class="service-title">Luxury Conference</h5>
-                                <p>Full AV setup, large LED wall, custom stage design, lounge area.</p>
-                                <div class="service-price">₹55,000</div>
-                                <div class="price-toggle" id="toggle-conference-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('conference-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('conference-luxury', 'custom')">Custom</button></div>
-                                <div id="fixed-conference-luxury"></div>
-                                <div id="custom-conference-luxury" class="custom-price" style="display:none;"><input type="number" id="conference-luxury-custom" class="form-control" min="40000" placeholder="Min ₹40,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('conference-luxury', 'Luxury Conference', 55000)">Add to Cart</button>
+                                <p>Themed decor, AV setup, custom stage, live flowers, red carpet.</p>
+                                <div class="service-price">₹40,000</div>
+                                <div class="price-toggle" id="toggle-corp-conf-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-conf-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-conf-luxury', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-conf-luxury"></div>
+                                <div id="custom-corp-conf-luxury" class="custom-price" style="display:none;"><input type="number" id="corp-conf-luxury-custom" class="form-control" min="30000" placeholder="Min ₹30,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-conf-luxury', 'Luxury Conference', 40000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ========== Product Launch Section ========== -->
+            <!-- Product Launch -->
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🚀 Product Launch</h3>
                 <div class="row g-4">
-                    <!-- Basic Product Launch -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/cfd9df/2e4b5c?text=Basic+Launch&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/d0e0e3/1f4c5c?text=Basic+Launch&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
-                                <h5 class="service-title">Basic Product Launch</h5>
-                                <p>Stage, backdrop, podium, basic AV, branding.</p>
-                                <div class="service-price">₹30,000</div>
-                                <div class="price-toggle" id="toggle-launch-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('launch-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('launch-basic', 'custom')">Custom</button></div>
-                                <div id="fixed-launch-basic"></div>
-                                <div id="custom-launch-basic" class="custom-price" style="display:none;"><input type="number" id="launch-basic-custom" class="form-control" min="20000" placeholder="Min ₹20,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('launch-basic', 'Basic Product Launch', 30000)">Add to Cart</button>
+                                <h5 class="service-title">Basic Launch</h5>
+                                <p>Stage backdrop, podium, basic branding.</p>
+                                <div class="service-price">₹20,000</div>
+                                <div class="price-toggle" id="toggle-corp-launch-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-launch-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-launch-basic', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-launch-basic"></div>
+                                <div id="custom-corp-launch-basic" class="custom-price" style="display:none;"><input type="number" id="corp-launch-basic-custom" class="form-control" min="15000" placeholder="Min ₹15,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-launch-basic', 'Basic Product Launch', 20000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Premium Product Launch -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b7c9d4/2e4b5c?text=Premium+Launch&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b3d1d9/1f4c5c?text=Premium+Launch&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
-                                <h5 class="service-title">Premium Product Launch</h5>
-                                <p>LED wall, dramatic lighting, photo booth, custom branding.</p>
-                                <div class="service-price">₹50,000</div>
-                                <div class="price-toggle" id="toggle-launch-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('launch-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('launch-premium', 'custom')">Custom</button></div>
-                                <div id="fixed-launch-premium"></div>
-                                <div id="custom-launch-premium" class="custom-price" style="display:none;"><input type="number" id="launch-premium-custom" class="form-control" min="35000" placeholder="Min ₹35,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('launch-premium', 'Premium Product Launch', 50000)">Add to Cart</button>
+                                <h5 class="service-title">Premium Launch</h5>
+                                <p>Themed backdrop, product display, floral decor, professional lighting.</p>
+                                <div class="service-price">₹35,000</div>
+                                <div class="price-toggle" id="toggle-corp-launch-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-launch-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-launch-premium', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-launch-premium"></div>
+                                <div id="custom-corp-launch-premium" class="custom-price" style="display:none;"><input type="number" id="corp-launch-premium-custom" class="form-control" min="25000" placeholder="Min ₹25,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-launch-premium', 'Premium Product Launch', 35000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Luxury Product Launch -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9fb8c7/2e4b5c?text=Luxury+Launch&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9dc1cc/1f4c5c?text=Luxury+Launch&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
-                                <h5 class="service-title">Luxury Product Launch</h5>
-                                <p>Immersive experience, large LED screens, stage effects, VIP lounge.</p>
-                                <div class="service-price">₹80,000</div>
-                                <div class="price-toggle" id="toggle-launch-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('launch-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('launch-luxury', 'custom')">Custom</button></div>
-                                <div id="fixed-launch-luxury"></div>
-                                <div id="custom-launch-luxury" class="custom-price" style="display:none;"><input type="number" id="launch-luxury-custom" class="form-control" min="60000" placeholder="Min ₹60,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('launch-luxury', 'Luxury Product Launch', 80000)">Add to Cart</button>
+                                <h5 class="service-title">Luxury Launch</h5>
+                                <p>Grand stage, multimedia, custom branding, live flowers, red carpet, photo zone.</p>
+                                <div class="service-price">₹55,000</div>
+                                <div class="price-toggle" id="toggle-corp-launch-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-launch-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-launch-luxury', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-launch-luxury"></div>
+                                <div id="custom-corp-launch-luxury" class="custom-price" style="display:none;"><input type="number" id="corp-launch-luxury-custom" class="form-control" min="40000" placeholder="Min ₹40,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-launch-luxury', 'Luxury Product Launch', 55000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ========== Annual Gala / Party Section ========== -->
+            <!-- Annual Gala / Awards -->
             <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🥂 Annual Gala / Party</h3>
+                <h3 class="fw-bold mb-4" style="color:var(--about-navy); border-left:8px solid var(--about-gold); padding-left:20px;">🏆 Annual Gala / Awards</h3>
                 <div class="row g-4">
-                    <!-- Basic Gala -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/cfd9df/2e4b5c?text=Basic+Gala&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Basic</span><img src="https://fakeimg.pl/600x400/d0e0e3/1f4c5c?text=Basic+Gala&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
                                 <h5 class="service-title">Basic Gala</h5>
-                                <p>Stage, dance floor, basic lighting, table decorations.</p>
-                                <div class="service-price">₹40,000</div>
-                                <div class="price-toggle" id="toggle-gala-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('gala-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('gala-basic', 'custom')">Custom</button></div>
-                                <div id="fixed-gala-basic"></div>
-                                <div id="custom-gala-basic" class="custom-price" style="display:none;"><input type="number" id="gala-basic-custom" class="form-control" min="30000" placeholder="Min ₹30,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('gala-basic', 'Basic Gala', 40000)">Add to Cart</button>
+                                <p>Stage backdrop, table decorations, basic lighting.</p>
+                                <div class="service-price">₹30,000</div>
+                                <div class="price-toggle" id="toggle-corp-gala-basic"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-gala-basic', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-gala-basic', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-gala-basic"></div>
+                                <div id="custom-corp-gala-basic" class="custom-price" style="display:none;"><input type="number" id="corp-gala-basic-custom" class="form-control" min="20000" placeholder="Min ₹20,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-gala-basic', 'Basic Gala', 30000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Premium Gala -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b7c9d4/2e4b5c?text=Premium+Gala&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Premium</span><img src="https://fakeimg.pl/600x400/b3d1d9/1f4c5c?text=Premium+Gala&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
                                 <h5 class="service-title">Premium Gala</h5>
-                                <p>Themed decor, DJ setup, photo booth, premium lighting.</p>
-                                <div class="service-price">₹65,000</div>
-                                <div class="price-toggle" id="toggle-gala-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('gala-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('gala-premium', 'custom')">Custom</button></div>
-                                <div id="fixed-gala-premium"></div>
-                                <div id="custom-gala-premium" class="custom-price" style="display:none;"><input type="number" id="gala-premium-custom" class="form-control" min="45000" placeholder="Min ₹45,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('gala-premium', 'Premium Gala', 65000)">Add to Cart</button>
+                                <p>Themed stage, floral centerpieces, lounge areas, dance floor lighting.</p>
+                                <div class="service-price">₹50,000</div>
+                                <div class="price-toggle" id="toggle-corp-gala-premium"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-gala-premium', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-gala-premium', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-gala-premium"></div>
+                                <div id="custom-corp-gala-premium" class="custom-price" style="display:none;"><input type="number" id="corp-gala-premium-custom" class="form-control" min="35000" placeholder="Min ₹35,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-gala-premium', 'Premium Gala', 50000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Luxury Gala -->
                     <div class="col-md-4">
                         <div class="service-card">
-                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9fb8c7/2e4b5c?text=Luxury+Gala&font=lobster" class="service-card-img"></div>
+                            <div class="card-img-wrapper"><span class="service-badge">Luxury</span><img src="https://fakeimg.pl/600x400/9dc1cc/1f4c5c?text=Luxury+Gala&font=lobster" class="service-card-img"></div>
                             <div class="service-card-body">
                                 <h5 class="service-title">Luxury Gala</h5>
-                                <p>Full production, live band, luxury decor, red carpet, VIP lounge.</p>
-                                <div class="service-price">₹1,00,000</div>
-                                <div class="price-toggle" id="toggle-gala-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('gala-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('gala-luxury', 'custom')">Custom</button></div>
-                                <div id="fixed-gala-luxury"></div>
-                                <div id="custom-gala-luxury" class="custom-price" style="display:none;"><input type="number" id="gala-luxury-custom" class="form-control" min="75000" placeholder="Min ₹75,000"></div>
-                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('gala-luxury', 'Luxury Gala', 100000)">Add to Cart</button>
+                                <p>Full venue decor, chandeliers, live entertainment setup, VIP lounge, photo booth.</p>
+                                <div class="service-price">₹80,000</div>
+                                <div class="price-toggle" id="toggle-corp-gala-luxury"><button class="btn btn-outline-primary active" onclick="setPriceMode('corp-gala-luxury', 'fixed')">Fixed</button><button class="btn btn-outline-primary" onclick="setPriceMode('corp-gala-luxury', 'custom')">Custom</button></div>
+                                <div id="fixed-corp-gala-luxury"></div>
+                                <div id="custom-corp-gala-luxury" class="custom-price" style="display:none;"><input type="number" id="corp-gala-luxury-custom" class="form-control" min="60000" placeholder="Min ₹60,000"></div>
+                                <button class="add-to-cart-btn mt-3" onclick="addToCartWedding('corp-gala-luxury', 'Luxury Gala', 80000)">Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -1360,7 +1351,7 @@
         </div>
     </section>
 
-    <!-- all decoration types tags (links to other category pages) -->
+    <!-- all decoration types tags -->
     <div class="container" data-aos="fade-up">
         <div class="service-tags justify-content-center">
             <a href="wedding.html" class="service-tag"><i class="bi bi-heart"></i> Wedding</a>
@@ -1424,8 +1415,8 @@
     <!-- CTA section -->
     <div class="container">
         <div class="cta-section text-center" data-aos="zoom-in">
-            <h2 style="font-size: 2.5rem;">Make Your Corporate Event Grand!</h2>
-            <p class="lead my-4">From conferences to galas, we create impressive corporate experiences.</p>
+            <h2 style="font-size: 2.5rem;">Make Your Corporate Event Shine!</h2>
+            <p class="lead my-4">From conferences to galas, we create professional and elegant setups.</p>
             <a href="#contact" class="btn btn-custom btn-lg"><i class="bi bi-telephone"></i> Contact Us Today</a>
         </div>
     </div>
@@ -1436,15 +1427,15 @@
             <div class="text-center mb-5">
                 <span class="hero-badge glass-morphism">Our Corporate Portfolio</span>
                 <h2 class="display-5 fw-bold mt-3">Captured Moments</h2>
-                <p class="text-soft">Explore our finest corporate event works</p>
+                <p class="text-soft">Explore our finest corporate decoration works</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/cfd9df/2e4b5c?text=Conference+Stage" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Conference Stage</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/b7c9d4/2e4b5c?text=Product+Launch" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Product Launch</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/9fb8c7/2e4b5c?text=Gala+Dinner" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Gala Dinner</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/cfd9df/2e4b5c?text=Corporate+Party" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Corporate Party</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/b7c9d4/2e4b5c?text=AV+Setup" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>AV Setup</span></div></div></div>
-                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/9fb8c7/2e4b5c?text=Branding" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Branding</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/d0e0e3/1f4c5c?text=Conference" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Conference</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/b3d1d9/1f4c5c?text=Product+Launch" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Product Launch</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/9dc1cc/1f4c5c?text=Gala" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Gala Dinner</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/d0e0e3/1f4c5c?text=Seminar" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Seminar</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/b3d1d9/1f4c5c?text=Awards" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Awards Night</span></div></div></div>
+                <div class="col-lg-4 col-md-6"><div class="gallery-item"><img src="https://fakeimg.pl/600x400/9dc1cc/1f4c5c?text=Corporate+Party" class="gallery-img"><div class="gallery-overlay"><button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button><span>Corporate Party</span></div></div></div>
             </div>
         </div>
     </section>
@@ -1499,7 +1490,7 @@
         </div>
     </footer>
 
-    <!-- ======= Booking Panel & Modals ======= -->
+    <!-- ======= Booking Panel & Modals (identical to murti.html) ======= -->
     <div id="selected-items-panel" class="selected-items-panel glass-morphism"></div>
     <button id="global-book-now-btn" class="global-book-now-btn"><i class="fas fa-calendar-check me-2"></i>Complete Booking</button>
     <div id="notification" class="notification"></div>
@@ -1536,10 +1527,11 @@
                     <div class="col-12 mb-3">
                         <select id="event-type" class="form-control-custom" required>
                             <option value="">Select Event Type</option>
-                            <option value="conference">Conference / Seminar</option>
+                            <option value="conference">Conference</option>
                             <option value="product-launch">Product Launch</option>
-                            <option value="gala">Annual Gala / Party</option>
-                            <option value="corporate-meeting">Corporate Meeting</option>
+                            <option value="gala">Annual Gala</option>
+                            <option value="seminar">Seminar</option>
+                            <option value="other">Other Corporate</option>
                         </select>
                     </div>
                     <div class="col-12 mb-3">
@@ -1628,14 +1620,14 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts (identical to murti.html, including login check, logout, addToCartWedding, processPayment with fetch) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
         AOS.init({ duration: 800, once: true });
 
-        // ========== नवीन फंक्शन्स (from wedding.html) ==========
+        // ========== प्राइस मोड सेट करणे ==========
         function setPriceMode(service, mode) {
             let fixedDiv = document.getElementById('fixed-' + service);
             let customDiv = document.getElementById('custom-' + service);
@@ -1650,7 +1642,7 @@
             }
         }
 
-        // Add to Cart for corporate page cards
+        // ========== Add to Cart (generic, same as wedding version) ==========
         function addToCartWedding(service, displayName, fixedPrice) {
             let modeElem = document.querySelector('#toggle-' + service + ' .btn.active');
             let mode = modeElem ? modeElem.innerText.trim().toLowerCase() : 'fixed';
@@ -1672,17 +1664,49 @@
             document.getElementById('global-book-now-btn').style.display = 'flex';
         }
 
-        // ========== जुनी फंक्शन्स (copy from index.html) ==========
+        // ========== Global Variables ==========
         let selectedServices = [];
         let bookingData = {};
         let selectedPaymentOption = '';
 
+        // ========== DOM Ready ==========
         document.addEventListener('DOMContentLoaded', function() {
             let today = new Date().toISOString().split('T')[0];
             if (document.getElementById('event-date')) document.getElementById('event-date').min = today;
             document.getElementById('global-book-now-btn').addEventListener('click', showBookingModal);
+            
+            // Check login status
+            fetch('/api/check_login')
+                .then(response => response.json())
+                .then(data => {
+                    const authDiv = document.getElementById('auth-buttons');
+                    if (data.logged_in) {
+                        authDiv.innerHTML = `
+                            <span class="me-2" style="color:var(--text-dark);">Welcome, ${data.username}</span>
+                            <button class="btn-book" onclick="logout()" style="padding:8px 20px; font-size:1rem;">Logout</button>
+                        `;
+                    } else {
+                        authDiv.innerHTML = '';
+                    }
+                })
+                .catch(error => console.log('Login check failed'));
         });
 
+        // ========== Logout ==========
+        function logout() {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/';
+                }
+            });
+        }
+
+        // ========== Cart Management ==========
         function removeService(id) {
             selectedServices = selectedServices.filter(s => s.id !== id);
             updateSelectedItemsDisplay();
@@ -1762,34 +1786,78 @@
             element.classList.add('selected');
         }
 
+        // ========== REAL BOOKING with fetch ==========
         function processPayment() {
-            if (!selectedPaymentOption) { showNotification('Please select a payment method!', 'error'); return; }
+            if (!selectedPaymentOption) {
+                showNotification('Please select a payment method!', 'error');
+                return;
+            }
+
             let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
             let total = subtotal + (subtotal * 0.18);
+            
+            let paymentMethod = selectedPaymentOption;
             closePaymentModal();
+
+            let bookingDataToSend = {
+                full_name: bookingData.full_name,
+                email: bookingData.email,
+                phone: bookingData.phone,
+                event_date: bookingData.event_date,
+                event_type: bookingData.event_type,
+                venue_address: bookingData.venue_address,
+                special_requests: bookingData.special_requests || '',
+                payment_method: paymentMethod,
+                services: selectedServices.map(s => ({
+                    name: s.name,
+                    price: s.price,
+                    mode: s.mode || 'fixed'
+                })),
+                total_amount: total
+            };
+
             showNotification('Processing your booking...');
-            setTimeout(() => {
-                let bookingId = 'ADZ-' + Math.floor(Math.random() * 10000);
-                document.getElementById('booking-id').textContent = bookingId;
-                document.getElementById('receipt-event-date').textContent = bookingData.event_date;
-                document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
-                let paymentText = { cash: 'Cash', card: 'Card', online: 'Online' }[selectedPaymentOption] || selectedPaymentOption;
-                document.getElementById('receipt-payment-method').textContent = paymentText;
-                document.getElementById('receipt-total').textContent = total.toFixed(2);
-                let items = document.getElementById('receipt-items');
-                items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
-                let sTotal = 0;
-                selectedServices.forEach(s => {
-                    items.innerHTML += `<div class="d-flex justify-content-between small"><span>${s.name}</span><span>₹${s.price.toLocaleString()}</span></div>`;
-                    sTotal += s.price;
-                });
-                items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top"><span>GST (18%)</span><span>₹${(sTotal*0.18).toFixed(2)}</span></div>`;
-                document.getElementById('receiptModal').classList.add('active');
-                selectedServices = [];
-                updateSelectedItemsDisplay();
-                document.getElementById('global-book-now-btn').style.display = 'none';
-                showNotification('Booking confirmed! ID: ' + bookingId);
-            }, 1000);
+
+            fetch('/api/create_booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingDataToSend)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('booking-id').textContent = data.booking_id;
+                    document.getElementById('receipt-event-date').textContent = bookingData.event_date;
+                    document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
+                    
+                    let paymentText = { cash: 'Cash', card: 'Card', online: 'Online' }[paymentMethod] || paymentMethod;
+                    document.getElementById('receipt-payment-method').textContent = paymentText;
+                    document.getElementById('receipt-total').textContent = total.toFixed(2);
+                    
+                    let items = document.getElementById('receipt-items');
+                    items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
+                    let sTotal = 0;
+                    selectedServices.forEach(s => {
+                        items.innerHTML += `<div class="d-flex justify-content-between small"><span>${s.name}</span><span>₹${s.price.toLocaleString()}</span></div>`;
+                        sTotal += s.price;
+                    });
+                    items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top"><span>GST (18%)</span><span>₹${(sTotal*0.18).toFixed(2)}</span></div>`;
+                    
+                    document.getElementById('receiptModal').classList.add('active');
+                    
+                    selectedServices = [];
+                    bookingData = {};
+                    updateSelectedItemsDisplay();
+                    document.getElementById('global-book-now-btn').style.display = 'none';
+                    showNotification('Booking confirmed! ID: ' + data.booking_id);
+                } else {
+                    showNotification('Booking failed: ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
+            });
         }
 
         function closeReceiptModal() { document.getElementById('receiptModal').classList.remove('active'); }
@@ -1807,11 +1875,32 @@
 
         function submitContactForm(event) {
             event.preventDefault();
+            let contactData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
             showNotification('Sending message...');
-            setTimeout(() => {
-                showNotification('Message sent successfully!');
-                document.getElementById('contactForm').reset();
-            }, 1000);
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(contactData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message);
+                    document.getElementById('contactForm').reset();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
+            });
         }
 
         function showNotification(msg, type = 'success') {

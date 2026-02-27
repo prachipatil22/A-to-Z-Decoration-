@@ -1635,7 +1635,7 @@
         // Initialize AOS
         AOS.init({ duration: 800, once: true });
 
-        // ========== नवीन फंक्शन्स (from wedding.html) ==========
+        // ========== प्राइस मोड सेट करणे (Fixed/Custom) ==========
         function setPriceMode(service, mode) {
             let fixedDiv = document.getElementById('fixed-' + service);
             let customDiv = document.getElementById('custom-' + service);
@@ -1650,7 +1650,7 @@
             }
         }
 
-        // Add to Cart for car decoration page cards
+        // ========== Add to Cart for Car Decoration ==========
         function addToCartWedding(service, displayName, fixedPrice) {
             let modeElem = document.querySelector('#toggle-' + service + ' .btn.active');
             let mode = modeElem ? modeElem.innerText.trim().toLowerCase() : 'fixed';
@@ -1672,17 +1672,49 @@
             document.getElementById('global-book-now-btn').style.display = 'flex';
         }
 
-        // ========== जुनी फंक्शन्स (copy from index.html) ==========
+        // ========== Global Variables ==========
         let selectedServices = [];
         let bookingData = {};
         let selectedPaymentOption = '';
 
+        // ========== DOM Ready ==========
         document.addEventListener('DOMContentLoaded', function() {
             let today = new Date().toISOString().split('T')[0];
             if (document.getElementById('event-date')) document.getElementById('event-date').min = today;
             document.getElementById('global-book-now-btn').addEventListener('click', showBookingModal);
+            
+            // Check login status
+            fetch('/api/check_login')
+                .then(response => response.json())
+                .then(data => {
+                    const authDiv = document.getElementById('auth-buttons');
+                    if (data.logged_in) {
+                        authDiv.innerHTML = `
+                            <span class="me-2" style="color:var(--text-dark);">Welcome, ${data.username}</span>
+                            <button class="btn-book" onclick="logout()" style="padding:8px 20px; font-size:1rem;">Logout</button>
+                        `;
+                    } else {
+                        authDiv.innerHTML = ''; // No login
+                    }
+                })
+                .catch(error => console.log('Login check failed'));
         });
 
+        // ========== Logout ==========
+        function logout() {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/';
+                }
+            });
+        }
+
+        // ========== Cart Management ==========
         function removeService(id) {
             selectedServices = selectedServices.filter(s => s.id !== id);
             updateSelectedItemsDisplay();
@@ -1762,34 +1794,80 @@
             element.classList.add('selected');
         }
 
+        // ========== REAL BOOKING with fetch ==========
         function processPayment() {
-            if (!selectedPaymentOption) { showNotification('Please select a payment method!', 'error'); return; }
+            if (!selectedPaymentOption) {
+                showNotification('Please select a payment method!', 'error');
+                return;
+            }
+
             let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
             let total = subtotal + (subtotal * 0.18);
-            closePaymentModal();
+            
+            let paymentMethod = selectedPaymentOption; // capture before closing modal
+            closePaymentModal(); // modal closes, but we keep the value
+
+            let bookingDataToSend = {
+                full_name: bookingData.full_name,
+                email: bookingData.email,
+                phone: bookingData.phone,
+                event_date: bookingData.event_date,
+                event_type: bookingData.event_type,
+                venue_address: bookingData.venue_address,
+                special_requests: bookingData.special_requests || '',
+                payment_method: paymentMethod,
+                services: selectedServices.map(s => ({
+                    name: s.name,
+                    price: s.price,
+                    mode: s.mode || 'fixed'
+                })),
+                total_amount: total
+            };
+
             showNotification('Processing your booking...');
-            setTimeout(() => {
-                let bookingId = 'ADZ-' + Math.floor(Math.random() * 10000);
-                document.getElementById('booking-id').textContent = bookingId;
-                document.getElementById('receipt-event-date').textContent = bookingData.event_date;
-                document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
-                let paymentText = { cash: 'Cash', card: 'Card', online: 'Online' }[selectedPaymentOption] || selectedPaymentOption;
-                document.getElementById('receipt-payment-method').textContent = paymentText;
-                document.getElementById('receipt-total').textContent = total.toFixed(2);
-                let items = document.getElementById('receipt-items');
-                items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
-                let sTotal = 0;
-                selectedServices.forEach(s => {
-                    items.innerHTML += `<div class="d-flex justify-content-between small"><span>${s.name}</span><span>₹${s.price.toLocaleString()}</span></div>`;
-                    sTotal += s.price;
-                });
-                items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top"><span>GST (18%)</span><span>₹${(sTotal*0.18).toFixed(2)}</span></div>`;
-                document.getElementById('receiptModal').classList.add('active');
-                selectedServices = [];
-                updateSelectedItemsDisplay();
-                document.getElementById('global-book-now-btn').style.display = 'none';
-                showNotification('Booking confirmed! ID: ' + bookingId);
-            }, 1000);
+
+            fetch('/api/create_booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingDataToSend)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Fill receipt with real data
+                    document.getElementById('booking-id').textContent = data.booking_id;
+                    document.getElementById('receipt-event-date').textContent = bookingData.event_date;
+                    document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
+                    
+                    let paymentText = { cash: 'Cash', card: 'Card', online: 'Online' }[paymentMethod] || paymentMethod;
+                    document.getElementById('receipt-payment-method').textContent = paymentText;
+                    document.getElementById('receipt-total').textContent = total.toFixed(2);
+                    
+                    let items = document.getElementById('receipt-items');
+                    items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
+                    let sTotal = 0;
+                    selectedServices.forEach(s => {
+                        items.innerHTML += `<div class="d-flex justify-content-between small"><span>${s.name}</span><span>₹${s.price.toLocaleString()}</span></div>`;
+                        sTotal += s.price;
+                    });
+                    items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top"><span>GST (18%)</span><span>₹${(sTotal*0.18).toFixed(2)}</span></div>`;
+                    
+                    document.getElementById('receiptModal').classList.add('active');
+                    
+                    // Clear cart
+                    selectedServices = [];
+                    bookingData = {};
+                    updateSelectedItemsDisplay();
+                    document.getElementById('global-book-now-btn').style.display = 'none';
+                    showNotification('Booking confirmed! ID: ' + data.booking_id);
+                } else {
+                    showNotification('Booking failed: ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
+            });
         }
 
         function closeReceiptModal() { document.getElementById('receiptModal').classList.remove('active'); }
@@ -1805,13 +1883,35 @@
             }
         }
 
+        // Contact form (optional – if you have /api/contact)
         function submitContactForm(event) {
             event.preventDefault();
+            let contactData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
             showNotification('Sending message...');
-            setTimeout(() => {
-                showNotification('Message sent successfully!');
-                document.getElementById('contactForm').reset();
-            }, 1000);
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(contactData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message);
+                    document.getElementById('contactForm').reset();
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
+            });
         }
 
         function showNotification(msg, type = 'success') {

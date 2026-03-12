@@ -36,7 +36,7 @@ class Booking(db.Model):
     venue_address = db.Column(db.Text, nullable=False)
     special_requests = db.Column(db.Text)
     payment_method = db.Column(db.String(50), nullable=False)
-    services = db.Column(db.Text, nullable=False)  # JSON
+    services = db.Column(db.Text, nullable=False)
     total_amount = db.Column(db.Float, nullable=False)
     booking_date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(20), default='confirmed')
@@ -80,8 +80,7 @@ def init_database():
         print("⚙️ Initializing database...", flush=True)
         db.create_all()
         print("✅ Database tables ready.", flush=True)
-        
-        # Create default admin
+
         if not User.query.filter_by(email='admin@atozdecorators.com').first():
             admin = User(
                 username='admin',
@@ -92,8 +91,7 @@ def init_database():
             )
             db.session.add(admin)
             print("✅ Admin created.", flush=True)
-        
-        # Create default guest user (for non-login bookings)
+
         if not User.query.filter_by(username='guest').first():
             guest = User(
                 username='guest',
@@ -104,11 +102,10 @@ def init_database():
             )
             db.session.add(guest)
             print("✅ Guest user created.", flush=True)
-        
-        # Add sample services
+
         if not Service.query.first():
             services = [
-                Service(name='Wedding Decorations', price=50000, category='wedding', 
+                Service(name='Wedding Decorations', price=50000, category='wedding',
                         description='Complete wedding decoration including mandap, stage, floral arrangements & lighting.',
                         image_url='https://images.unsplash.com/photo-1511285560929-80b456fea0bc'),
                 Service(name='Birthday Parties', price=15000, category='birthday',
@@ -142,7 +139,7 @@ def init_database():
             for s in services:
                 db.session.add(s)
             print("✅ 10 sample services added.", flush=True)
-        
+
         try:
             db.session.commit()
             print("✅ Database committed successfully.", flush=True)
@@ -162,7 +159,6 @@ def home():
     services = Service.query.filter_by(is_active=True).all()
     return render_template('home.html', services=services)
 
-# All decoration routes
 @app.route('/wedding')
 def wedding_page():
     return render_template('wedding.html')
@@ -350,8 +346,7 @@ def api_create_booking():
         for field in required:
             if field not in data:
                 return jsonify({'success': False, 'message': f'Missing field: {field}'}), 400
-        
-        # Create new booking
+
         booking = Booking(
             booking_id=booking_id,
             user_id=user_id,
@@ -451,37 +446,44 @@ def admin_login():
             return redirect(url_for('admin_login'))
     return render_template('adminlogin.html')
 
+# ✅ FIXED: bookings_json add केला
 @app.route('/admin/panel')
 @admin_required
 def admin_panel():
-    # Get counts
     total_users = User.query.count()
     total_bookings = Booking.query.count()
     total_services = Service.query.count()
     total_contacts = Contact.query.count()
-    
-    # Get recent bookings (last 5)
+
     recent_bookings = Booking.query.order_by(Booking.booking_date.desc()).limit(5).all()
-    
-    # Get all bookings for the table
     all_bookings = Booking.query.order_by(Booking.booking_date.desc()).all()
-    
-    # Get all users
     all_users = User.query.order_by(User.created_at.desc()).all()
-    
-    # Get all services
     all_services = Service.query.all()
-    
-    # Get all contacts
     all_contacts = Contact.query.order_by(Contact.created_at.desc()).all()
-    
-    # Debug prints
-    print("="*50)
+
+    print("=" * 50)
     print(f"Total Bookings: {total_bookings}")
     for booking in all_bookings:
         print(f"Booking ID: {booking.booking_id}, Customer: {booking.full_name}, Phone: {booking.phone}, Payment: {booking.payment_method}")
-    print("="*50)
-    
+    print("=" * 50)
+
+    # ✅ JSON serialize - template मध्ये Jinja2 loop नको
+    bookings_json = json.dumps([{
+        'id': b.id,
+        'booking_id': b.booking_id or '',
+        'full_name': b.full_name or '',
+        'phone': b.phone or '',
+        'email': b.email or '',
+        'event_date': b.event_date or '',
+        'event_type': b.event_type or '',
+        'venue_address': b.venue_address or '',
+        'special_requests': b.special_requests or '',
+        'payment_method': b.payment_method or '',
+        'total_amount': b.total_amount or 0,
+        'status': b.status or 'pending',
+        'booking_date': b.booking_date.strftime('%d-%m-%Y %H:%M') if b.booking_date else ''
+    } for b in all_bookings])
+
     return render_template('admin.html',
                            total_users=total_users,
                            total_bookings=total_bookings,
@@ -491,7 +493,8 @@ def admin_panel():
                            all_bookings=all_bookings,
                            all_users=all_users,
                            all_services=all_services,
-                           all_contacts=all_contacts)
+                           all_contacts=all_contacts,
+                           bookings_json=bookings_json)  # ✅ हे add केलं
 
 @app.route('/admin/booking/update/<int:id>', methods=['POST'])
 @admin_required
@@ -579,8 +582,7 @@ def reset_db():
         db.drop_all()
         db.create_all()
         print("✅ Database dropped and recreated.", flush=True)
-        
-        # Create admin
+
         admin = User(
             username='admin',
             email='admin@atozdecorators.com',
@@ -589,8 +591,7 @@ def reset_db():
             is_admin=True
         )
         db.session.add(admin)
-        
-        # Create guest
+
         guest = User(
             username='guest',
             email='guest@atozdecorators.com',
@@ -599,10 +600,9 @@ def reset_db():
             is_admin=False
         )
         db.session.add(guest)
-        
-        # Add services
+
         services = [
-            Service(name='Wedding Decorations', price=50000, category='wedding', 
+            Service(name='Wedding Decorations', price=50000, category='wedding',
                     description='Complete wedding decoration...', image_url='https://images.unsplash.com/photo-1511285560929-80b456fea0bc'),
             Service(name='Birthday Parties', price=15000, category='birthday',
                     description='Theme-based birthday decorations...', image_url='https://images.unsplash.com/photo-1530103862676-de8c9debad1d'),
@@ -625,7 +625,7 @@ def reset_db():
         ]
         for s in services:
             db.session.add(s)
-        
+
         db.session.commit()
         flash('Database reset! Admin, Guest and 10 services recreated.', 'success')
         print("✅ Database reset completed.", flush=True)

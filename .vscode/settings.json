@@ -1,0 +1,10 @@
+{
+    "html.validate.scripts": false,
+    "html.validate.styles": false,
+    "files.associations": {
+        "*.html": "jinja-html"
+    },
+    "emmet.includeLanguages": {
+        "jinja-html": "html"
+    }
+}

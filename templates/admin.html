@@ -40,6 +40,7 @@
         .modal-content-custom { background: white; border-radius: 20px; max-width: 520px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .modal-header-custom { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary-soft); padding-bottom: 15px; margin-bottom: 15px; }
         .btn-close-custom { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-soft); }
+        .spinner-border { width: 2rem; height: 2rem; }
         @media (max-width: 768px) { .sidebar { position: relative; width: 100%; min-height: auto; } .main-content { margin-left: 0; } }
     </style>
 </head>
@@ -147,7 +148,7 @@
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead class="table-light">
-                                <tr>
+                                70<thead>
                                     <th>Booking ID</th>
                                     <th>Customer</th>
                                     <th><i class="fas fa-phone me-1"></i> Phone</th>
@@ -178,7 +179,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="viewBookingDetails({{ b.id }})">
+                                        <button class="btn btn-sm btn-outline-primary view-details-btn" data-id="{{ b.id }}">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
@@ -234,7 +235,7 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-info" onclick="viewBookingDetails({{ b.id }})">
+                                        <button class="btn btn-sm btn-outline-info view-details-btn" data-id="{{ b.id }}">
                                             <i class="fas fa-info-circle"></i>
                                         </button>
                                     </td>
@@ -466,80 +467,164 @@
             </h5>
             <button class="btn-close-custom" onclick="closeModal()">&times;</button>
         </div>
-        <div id="bookingDetailContent">Loading...</div>
+        <div id="bookingDetailContent">
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2">Loading...</p>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- app.py मधून bookings_json येतो - Jinja2 loop नाही - 0 errors -->
+<!-- Hidden JSON data for fallback -->
 <script id="booking-json" type="application/json">{{ bookings_json | safe }}</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    var bookingData = {};
-    try {
-        var bookingList = JSON.parse(document.getElementById('booking-json').textContent);
-        bookingList.forEach(function(b) { bookingData[String(b.id)] = b; });
-    } catch(e) {
-        console.error('Booking data parse error:', e);
+    // Global variables
+    let bookingData = {};
+
+    // Load booking data once from API (preferred) or fallback to JSON
+    function loadBookings() {
+        fetch('/api/bookings/all')
+            .then(response => response.json())
+            .then(data => {
+                bookingData = {};
+                data.forEach(booking => {
+                    bookingData[String(booking.id)] = booking;
+                });
+                console.log('Bookings loaded via API:', Object.keys(bookingData).length);
+            })
+            .catch(error => {
+                console.error('API error, using fallback JSON:', error);
+                // Fallback to embedded JSON
+                try {
+                    const jsonScript = document.getElementById('booking-json');
+                    if (jsonScript && jsonScript.textContent) {
+                        const data = JSON.parse(jsonScript.textContent);
+                        data.forEach(booking => {
+                            bookingData[String(booking.id)] = booking;
+                        });
+                        console.log('Bookings loaded from template:', Object.keys(bookingData).length);
+                    }
+                } catch(e) {
+                    console.error('Fallback JSON parse error:', e);
+                }
+            });
     }
 
+    // Show section (dashboard, bookings, etc)
     function showSection(section) {
-        document.querySelectorAll('[id$="-section"]').forEach(function(el) {
-            el.style.display = 'none';
-        });
-        var el = document.getElementById(section + '-section');
+        document.querySelectorAll('[id$="-section"]').forEach(el => el.style.display = 'none');
+        const el = document.getElementById(section + '-section');
         if (el) el.style.display = 'block';
-        document.querySelectorAll('.sidebar .nav-link').forEach(function(l) {
-            l.classList.remove('active');
-        });
-        var lk = document.getElementById('link-' + section);
+        document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+        const lk = document.getElementById('link-' + section);
         if (lk) lk.classList.add('active');
     }
 
+    // View booking details with AJAX fallback
     function viewBookingDetails(bookingId) {
-        var b = bookingData[String(bookingId)];
-        var content = document.getElementById('bookingDetailContent');
-        document.getElementById('bookingDetailModal').classList.add('active');
+        const modal = document.getElementById('bookingDetailModal');
+        const content = document.getElementById('bookingDetailContent');
+        modal.classList.add('active');
+        content.innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2">Loading...</p>
+            </div>
+        `;
 
-        if (!b) {
+        // Try local cache first
+        if (bookingData[String(bookingId)]) {
+            displayBookingDetails(bookingData[String(bookingId)]);
+        } else {
+            // Fetch from API
+            fetch(`/api/booking/${bookingId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) throw new Error(data.error);
+                    displayBookingDetails(data);
+                })
+                .catch(err => {
+                    console.error('Error loading booking:', err);
+                    content.innerHTML = '<p class="text-danger text-center py-3">Error loading booking details.</p>';
+                });
+        }
+    }
+
+    function displayBookingDetails(b) {
+        const content = document.getElementById('bookingDetailContent');
+        if (!b || b.error) {
             content.innerHTML = '<p class="text-danger text-center py-3">Booking details not found.</p>';
             return;
         }
 
-        var statusColors = { confirmed: 'success', pending: 'warning', completed: 'primary', cancelled: 'danger' };
-        var sc = statusColors[b.status] || 'secondary';
-        var st = b.status ? b.status.charAt(0).toUpperCase() + b.status.slice(1) : 'Pending';
+        const statusColors = { confirmed: 'success', pending: 'warning', completed: 'primary', cancelled: 'danger' };
+        const sc = statusColors[b.status] || 'secondary';
+        const st = b.status ? b.status.charAt(0).toUpperCase() + b.status.slice(1) : 'Pending';
 
-        content.innerHTML =
-            '<table class="table table-borderless table-sm">' +
-            '<tr><th style="width:40%">Booking ID</th><td><strong>' + (b.booking_id || 'N/A') + '</strong></td></tr>' +
-            '<tr><th>Customer</th><td>' + (b.full_name || 'N/A') + '</td></tr>' +
-            '<tr><th>Phone</th><td>' + (b.phone || 'N/A') + '</td></tr>' +
-            '<tr><th>Email</th><td>' + (b.email || 'N/A') + '</td></tr>' +
-            '<tr><th>Event Date</th><td>' + (b.event_date || 'N/A') + '</td></tr>' +
-            '<tr><th>Event Type</th><td>' + (b.event_type || 'N/A') + '</td></tr>' +
-            '<tr><th>Venue</th><td>' + (b.venue_address || 'N/A') + '</td></tr>' +
-            '<tr><th>Special Requests</th><td>' + (b.special_requests || '-') + '</td></tr>' +
-            '<tr><th>Payment</th><td><span class="badge bg-info text-dark">' + (b.payment_method || 'N/A').toUpperCase() + '</span></td></tr>' +
-            '<tr><th>Total Amount</th><td><strong>&#8377;' + (b.total_amount || 0) + '</strong></td></tr>' +
-            '<tr><th>Status</th><td><span class="badge bg-' + sc + '">' + st + '</span></td></tr>' +
-            '<tr><th>Booked On</th><td>' + (b.booking_date || 'N/A') + '</td></tr>' +
-            '</table>';
+        content.innerHTML = `
+            <table class="table table-borderless table-sm">
+                <tr><th style="width:40%">Booking ID</th><td><strong>${escapeHtml(b.booking_id || 'N/A')}</strong></td></tr>
+                <tr><th>Customer</th><td>${escapeHtml(b.full_name || 'N/A')}</td></tr>
+                <tr><th>Phone</th><td>${escapeHtml(b.phone || 'N/A')}</td></tr>
+                <tr><th>Email</th><td>${escapeHtml(b.email || 'N/A')}</td></tr>
+                <tr><th>Event Date</th><td>${escapeHtml(b.event_date || 'N/A')}</td></tr>
+                <tr><th>Event Type</th><td>${escapeHtml(b.event_type || 'N/A')}</td></tr>
+                <tr><th>Venue</th><td>${escapeHtml(b.venue_address || 'N/A')}</td></tr>
+                <tr><th>Special Requests</th><td>${escapeHtml(b.special_requests || '-')}</td></tr>
+                <tr><th>Payment</th><td><span class="badge bg-info text-dark">${escapeHtml((b.payment_method || 'N/A').toUpperCase())}</span></td></tr>
+                <tr><th>Total Amount</th><td><strong>&#8377;${b.total_amount || 0}</strong></td></tr>
+                <tr><th>Status</th><td><span class="badge bg-${sc}">${st}</span></td></tr>
+                <tr><th>Booked On</th><td>${escapeHtml(b.booking_date || 'N/A')}</td></tr>
+            </table>
+        `;
+    }
+
+    // Simple HTML escape to prevent XSS
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
     }
 
     function closeModal() {
         document.getElementById('bookingDetailModal').classList.remove('active');
     }
 
+    // Click outside to close modal
     window.onclick = function(e) {
         if (e.target.classList.contains('modal-custom')) {
             e.target.classList.remove('active');
         }
     };
 
+    // Setup event listeners for view details buttons
+    function setupViewDetailsButtons() {
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('.view-details-btn');
+            if (btn) {
+                e.preventDefault();
+                const bookingId = btn.dataset.id;
+                if (bookingId) {
+                    viewBookingDetails(bookingId);
+                }
+            }
+        });
+    }
+
+    // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
         showSection('dashboard');
+        loadBookings();
+        setupViewDetailsButtons();
     });
 </script>
+
 </body>
 </html>

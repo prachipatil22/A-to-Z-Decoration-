@@ -131,17 +131,15 @@
     <h1>A to Z Decorators</h1>
     <p>India's Most Trusted Event Decoration Partner</p>
     
-    <!-- ✅ योग्य लिंक्स – admin login साठी /admin/login वापरा -->
     <a href="/login" class="btn btn-login">User Login</a>
     <a href="/register" class="btn btn-register">Register</a>
     <br>
-    <!-- ✅ हा दुरुस्त केला – /admin/login -->
+    <!-- ✅ Admin Login लिंक /admin/login वर ठेवली -->
     <a href="/admin/login" class="btn btn-admin">Admin Login</a>
     <br>
     <a href="/home" class="btn-guest">Continue as Guest →</a>
   </div>
 
-  <!-- फ्लॅश मेसेजेस (Jinja2) -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}

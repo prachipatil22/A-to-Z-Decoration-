@@ -1,4 +1,4 @@
--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="mr">
 <head>
   <meta charset="utf-8" />
@@ -21,7 +21,6 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    /* full-screen loader */
     .loader-wrap{
       position:fixed;
       inset:0;
@@ -40,7 +39,6 @@
       pointer-events:none;
     }
 
-    /* logo styling */
     .logo{
       display:flex;
       gap:12px;
@@ -49,7 +47,6 @@
     }
     .logo svg{width:160px;height:160px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.6));}
 
-    /* main content */
     .container{
       min-height:100vh;
       display:flex;
@@ -203,7 +200,6 @@
   </style>
 </head>
 <body>
-  <!-- Loader with animated SVG logo -->
   <div id="loader" class="loader-wrap" aria-hidden="false">
     <div class="logo" role="img" aria-label="A to Z Decorators logo">
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -235,7 +231,6 @@
     </div>
   </div>
 
-  <!-- Main page -->
   <main class="container" id="mainContent" aria-hidden="true">
     <div class="card">
       <div class="form-header">
@@ -265,7 +260,6 @@
         </div>
       </div>
 
-      <!-- Flash Messages -->
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
@@ -276,6 +270,7 @@
         {% endif %}
       {% endwith %}
 
+      <!-- ✅ फॉर्म action="/admin/login" वर -->
       <form method="POST" action="/admin/login">
         <div class="form-group">
           <label for="username">Username</label>

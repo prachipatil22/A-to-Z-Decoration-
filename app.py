@@ -422,13 +422,60 @@ def api_contact():
         print(f"❌ Contact error: {e}", flush=True)
         return jsonify({'success': False, 'message': str(e)}), 500
 
+# ======================= API ENDPOINTS FOR ADMIN PANEL =======================
+@app.route('/api/bookings/all')
+def get_all_bookings_api():
+    bookings = Booking.query.all()
+    bookings_list = []
+    for b in bookings:
+        bookings_list.append({
+            'id': b.id,
+            'booking_id': b.booking_id or '',
+            'full_name': b.full_name or '',
+            'phone': b.phone or '',
+            'email': b.email or '',
+            'event_date': b.event_date or '',
+            'event_type': b.event_type or '',
+            'venue_address': b.venue_address or '',
+            'special_requests': b.special_requests or '',
+            'payment_method': b.payment_method or '',
+            'total_amount': float(b.total_amount) if b.total_amount else 0,
+            'status': b.status or 'pending',
+            'booking_date': b.booking_date.strftime('%Y-%m-%d %H:%M:%S') if b.booking_date else ''
+        })
+    return jsonify(bookings_list)
+
+@app.route('/api/booking/<int:booking_id>')
+def get_booking_details_api(booking_id):
+    booking = Booking.query.get(booking_id)
+    if not booking:
+        return jsonify({'error': 'Booking not found'}), 404
+    return jsonify({
+        'id': booking.id,
+        'booking_id': booking.booking_id or '',
+        'full_name': booking.full_name or '',
+        'phone': booking.phone or '',
+        'email': booking.email or '',
+        'event_date': booking.event_date or '',
+        'event_type': booking.event_type or '',
+        'venue_address': booking.venue_address or '',
+        'special_requests': booking.special_requests or '',
+        'payment_method': booking.payment_method or '',
+        'total_amount': float(booking.total_amount) if booking.total_amount else 0,
+        'status': booking.status or 'pending',
+        'booking_date': booking.booking_date.strftime('%Y-%m-%d %H:%M:%S') if booking.booking_date else ''
+    })
+# =============================================================================
+
 # -------------------- ADMIN PANEL ROUTES --------------------
+# ✅ Admin login page at /admin/login
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if session.get('user_id'):
         user = User.query.get(session['user_id'])
         if user and user.is_admin:
             return redirect(url_for('admin_panel'))
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -444,9 +491,10 @@ def admin_login():
         else:
             flash('Invalid credentials or not an admin!', 'error')
             return redirect(url_for('admin_login'))
+
     return render_template('adminlogin.html')
 
-# ✅ FIXED: bookings_json add केला
+# ✅ Admin dashboard
 @app.route('/admin/panel')
 @admin_required
 def admin_panel():
@@ -461,13 +509,6 @@ def admin_panel():
     all_services = Service.query.all()
     all_contacts = Contact.query.order_by(Contact.created_at.desc()).all()
 
-    print("=" * 50)
-    print(f"Total Bookings: {total_bookings}")
-    for booking in all_bookings:
-        print(f"Booking ID: {booking.booking_id}, Customer: {booking.full_name}, Phone: {booking.phone}, Payment: {booking.payment_method}")
-    print("=" * 50)
-
-    # ✅ JSON serialize - template मध्ये Jinja2 loop नको
     bookings_json = json.dumps([{
         'id': b.id,
         'booking_id': b.booking_id or '',
@@ -494,8 +535,9 @@ def admin_panel():
                            all_users=all_users,
                            all_services=all_services,
                            all_contacts=all_contacts,
-                           bookings_json=bookings_json)  # ✅ हे add केलं
+                           bookings_json=bookings_json)
 
+# -------------------- ADMIN MANAGEMENT ROUTES --------------------
 @app.route('/admin/booking/update/<int:id>', methods=['POST'])
 @admin_required
 def admin_update_booking(id):

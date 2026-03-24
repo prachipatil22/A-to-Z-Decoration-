@@ -74,24 +74,35 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# -------------------- DATABASE INITIALIZATION --------------------
+# -------------------- DATABASE INITIALIZATION (FIXED) --------------------
 def init_database():
     with app.app_context():
         print("⚙️ Initializing database...", flush=True)
         db.create_all()
         print("✅ Database tables ready.", flush=True)
 
-        if not User.query.filter_by(email='admin@atozdecorators.com').first():
-            admin = User(
+        # Ensure an admin exists
+        admin_user = User.query.filter_by(email='admin@atozdecorators.com').first()
+        if admin_user:
+            # If exists, make sure it's admin and password is correct
+            if not admin_user.is_admin:
+                admin_user.is_admin = True
+            # Reset password to known value
+            admin_user.password = generate_password_hash('admin123', method='pbkdf2:sha256')
+            print("✅ Existing admin account updated (password reset to 'admin123').", flush=True)
+        else:
+            # Create new admin
+            admin_user = User(
                 username='admin',
                 email='admin@atozdecorators.com',
                 phone='1234567890',
                 password=generate_password_hash('admin123', method='pbkdf2:sha256'),
                 is_admin=True
             )
-            db.session.add(admin)
-            print("✅ Admin created.", flush=True)
+            db.session.add(admin_user)
+            print("✅ Admin created with username 'admin', password 'admin123'.", flush=True)
 
+        # Ensure guest user exists
         if not User.query.filter_by(username='guest').first():
             guest = User(
                 username='guest',
@@ -103,6 +114,7 @@ def init_database():
             db.session.add(guest)
             print("✅ Guest user created.", flush=True)
 
+        # Add sample services if none exist
         if not Service.query.first():
             services = [
                 Service(name='Wedding Decorations', price=50000, category='wedding',
@@ -422,55 +434,10 @@ def api_contact():
         print(f"❌ Contact error: {e}", flush=True)
         return jsonify({'success': False, 'message': str(e)}), 500
 
-# ======================= API ENDPOINTS FOR ADMIN PANEL =======================
-@app.route('/api/bookings/all')
-def get_all_bookings_api():
-    bookings = Booking.query.all()
-    bookings_list = []
-    for b in bookings:
-        bookings_list.append({
-            'id': b.id,
-            'booking_id': b.booking_id or '',
-            'full_name': b.full_name or '',
-            'phone': b.phone or '',
-            'email': b.email or '',
-            'event_date': b.event_date or '',
-            'event_type': b.event_type or '',
-            'venue_address': b.venue_address or '',
-            'special_requests': b.special_requests or '',
-            'payment_method': b.payment_method or '',
-            'total_amount': float(b.total_amount) if b.total_amount else 0,
-            'status': b.status or 'pending',
-            'booking_date': b.booking_date.strftime('%Y-%m-%d %H:%M:%S') if b.booking_date else ''
-        })
-    return jsonify(bookings_list)
-
-@app.route('/api/booking/<int:booking_id>')
-def get_booking_details_api(booking_id):
-    booking = Booking.query.get(booking_id)
-    if not booking:
-        return jsonify({'error': 'Booking not found'}), 404
-    return jsonify({
-        'id': booking.id,
-        'booking_id': booking.booking_id or '',
-        'full_name': booking.full_name or '',
-        'phone': booking.phone or '',
-        'email': booking.email or '',
-        'event_date': booking.event_date or '',
-        'event_type': booking.event_type or '',
-        'venue_address': booking.venue_address or '',
-        'special_requests': booking.special_requests or '',
-        'payment_method': booking.payment_method or '',
-        'total_amount': float(booking.total_amount) if booking.total_amount else 0,
-        'status': booking.status or 'pending',
-        'booking_date': booking.booking_date.strftime('%Y-%m-%d %H:%M:%S') if booking.booking_date else ''
-    })
-# =============================================================================
-
 # -------------------- ADMIN PANEL ROUTES --------------------
-# ✅ Admin login page at /admin/login
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
+    # If already logged in as admin, go to panel
     if session.get('user_id'):
         user = User.query.get(session['user_id'])
         if user and user.is_admin:
@@ -481,6 +448,7 @@ def admin_login():
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password) and user.is_admin:
+            # Set session
             session['user_id'] = user.id
             session['username'] = user.username
             session['user_email'] = user.email
@@ -494,50 +462,63 @@ def admin_login():
 
     return render_template('adminlogin.html')
 
-# ✅ Admin dashboard
+
 @app.route('/admin/panel')
 @admin_required
 def admin_panel():
-    total_users = User.query.count()
-    total_bookings = Booking.query.count()
-    total_services = Service.query.count()
-    total_contacts = Contact.query.count()
+    try:
+        # Fetch data
+        total_users = User.query.count()
+        total_bookings = Booking.query.count()
+        total_services = Service.query.count()
+        total_contacts = Contact.query.count()
 
-    recent_bookings = Booking.query.order_by(Booking.booking_date.desc()).limit(5).all()
-    all_bookings = Booking.query.order_by(Booking.booking_date.desc()).all()
-    all_users = User.query.order_by(User.created_at.desc()).all()
-    all_services = Service.query.all()
-    all_contacts = Contact.query.order_by(Contact.created_at.desc()).all()
+        recent_bookings = Booking.query.order_by(Booking.booking_date.desc()).limit(5).all()
+        all_bookings = Booking.query.order_by(Booking.booking_date.desc()).all()
+        all_users = User.query.order_by(User.created_at.desc()).all()
+        all_services = Service.query.all()
+        all_contacts = Contact.query.order_by(Contact.created_at.desc()).all()
 
-    bookings_json = json.dumps([{
-        'id': b.id,
-        'booking_id': b.booking_id or '',
-        'full_name': b.full_name or '',
-        'phone': b.phone or '',
-        'email': b.email or '',
-        'event_date': b.event_date or '',
-        'event_type': b.event_type or '',
-        'venue_address': b.venue_address or '',
-        'special_requests': b.special_requests or '',
-        'payment_method': b.payment_method or '',
-        'total_amount': b.total_amount or 0,
-        'status': b.status or 'pending',
-        'booking_date': b.booking_date.strftime('%d-%m-%Y %H:%M') if b.booking_date else ''
-    } for b in all_bookings])
+        # Build bookings_json safely
+        bookings_json_list = []
+        for b in all_bookings:
+            booking_data = {
+                'id': b.id,
+                'booking_id': b.booking_id or '',
+                'full_name': b.full_name or '',
+                'phone': b.phone or '',
+                'email': b.email or '',
+                'event_date': b.event_date or '',
+                'event_type': b.event_type or '',
+                'venue_address': b.venue_address or '',
+                'special_requests': b.special_requests or '',
+                'payment_method': b.payment_method or '',
+                'total_amount': b.total_amount or 0,
+                'status': b.status or 'pending',
+                'booking_date': b.booking_date.strftime('%d-%m-%Y %H:%M') if b.booking_date else ''
+            }
+            bookings_json_list.append(booking_data)
+        bookings_json = json.dumps(bookings_json_list)
 
-    return render_template('admin.html',
-                           total_users=total_users,
-                           total_bookings=total_bookings,
-                           total_services=total_services,
-                           total_contacts=total_contacts,
-                           recent_bookings=recent_bookings,
-                           all_bookings=all_bookings,
-                           all_users=all_users,
-                           all_services=all_services,
-                           all_contacts=all_contacts,
-                           bookings_json=bookings_json)
+        # Render template
+        return render_template('admin.html',
+                               total_users=total_users,
+                               total_bookings=total_bookings,
+                               total_services=total_services,
+                               total_contacts=total_contacts,
+                               recent_bookings=recent_bookings,
+                               all_bookings=all_bookings,
+                               all_users=all_users,
+                               all_services=all_services,
+                               all_contacts=all_contacts,
+                               bookings_json=bookings_json)
 
-# -------------------- ADMIN MANAGEMENT ROUTES --------------------
+    except Exception as e:
+        import traceback
+        traceback.print_exc()  # prints to console
+        flash(f'Error loading admin panel: {str(e)}', 'error')
+        return redirect(url_for('admin_login'))
+
 @app.route('/admin/booking/update/<int:id>', methods=['POST'])
 @admin_required
 def admin_update_booking(id):
@@ -617,8 +598,8 @@ def admin_contact_delete(id):
     flash('Contact deleted!', 'success')
     return redirect(url_for('admin_panel'))
 
+# -------------------- RESET DATABASE (NO LOGIN REQUIRED) --------------------
 @app.route('/reset_db')
-@admin_required
 def reset_db():
     try:
         db.drop_all()

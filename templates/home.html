@@ -29,7 +29,7 @@
             --gray-light: #f3f2f7;
             --text-dark: #1e1e2f;
             --text-soft: #5a5a72;
-            --shadow-sm: 0 10px 30px rgba(138, 111, 232, 0.12);
+            --shadow-sm: 0 10px 30px rgba(46, 40, 67, 0.12);
             --shadow-md: 0 15px 40px rgba(106, 78, 204, 0.2);
             --shadow-lg: 0 20px 60px rgba(88, 51, 204, 0.25);
             --glass-bg: rgba(255, 255, 255, 0.75);
@@ -694,11 +694,16 @@
             font-size: 1.3rem;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 20;
+            cursor: pointer;
         }
         .btn-like:hover {
             background: white;
             transform: scale(1.2) rotate(10deg);
             color: #ff3b5c;
+        }
+        .btn-like.liked i {
+            font-weight: 900;
         }
 
         /* ========== CTA SECTION ========== */
@@ -1147,7 +1152,6 @@
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
-                <!-- Auth buttons - JavaScript द्वारे populate होतील -->
                 <div class="d-flex" id="auth-buttons"></div>
             </div>
         </div>
@@ -1229,13 +1233,11 @@
                             <h5 class="service-title">Wedding Decorations</h5>
                             <p class="service-text">Complete wedding setup including mandap, stage, floral arrangements & premium lighting.</p>
                             
-                            <!-- प्राइस टॉगल -->
                             <div class="price-toggle" id="toggle-wedding">
                                 <button class="btn btn-outline-primary active" onclick="setPriceMode('wedding', 'fixed')">Fixed</button>
                                 <button class="btn btn-outline-primary" onclick="setPriceMode('wedding', 'custom')">Custom</button>
                             </div>
                             
-                            <!-- फिक्स्ड पॅकेजेस (डीफॉल्ट) -->
                             <div id="fixed-wedding" class="fixed-packages">
                                 <select id="wedding-select">
                                     <option value="35000">Basic Wedding - ₹35,000</option>
@@ -1245,12 +1247,10 @@
                                 </select>
                             </div>
                             
-                            <!-- कस्टम बजेट (सुरुवातीला लपवलेले) -->
                             <div id="custom-wedding" class="custom-price" style="display: none;">
                                 <input type="number" id="wedding-custom" class="form-control" placeholder="Enter your budget (min ₹20,000)" min="20000">
                             </div>
                             
-                            <!-- Add to Cart बटण -->
                             <button class="add-to-cart-btn mt-3" onclick="addToCart('wedding', 'Wedding Decorations')">
                                 <i class="fas fa-cart-plus me-2"></i>Add to Cart
                             </button>
@@ -1739,7 +1739,7 @@
         </div>
     </div>
 
-    <!-- ======= Gallery Section ======= -->
+    <!-- ======= Gallery Section with Favourite Functionality ======= -->
     <section id="gallery" class="gallery-section">
         <div class="container py-4">
             <div class="text-center mb-5">
@@ -1748,96 +1748,117 @@
                 <p class="text-soft">Explore our finest decoration works</p>
             </div>
             
-            <!--  row  9 images (3 rows × 3 columns) -->
             <div class="row g-4">
-                <!-- Row 1 - 3 images -->
+                <!-- Gallery Image 1 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/haldi.jpg" class="gallery-img" alt="Haldi Ceremony">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'haldi')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.5k</span></div>
                         </div>
                     </div>
                 </div>
+                <!-- Gallery Image 2 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/officee.jpg" class="gallery-img" alt="Office Event">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'office')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.8k</span></div>
                         </div>
                     </div>
                 </div>
+                <!-- Gallery Image 3 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/cop.jpg" class="gallery-img" alt="Corporate Party">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'corporate')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.2k</span></div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Row 2 - 3 images -->
+                <!-- Gallery Image 4 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/festival.jpg" class="gallery-img" alt="Wedding Car">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'festival')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.1k</span></div>
                         </div>
                     </div>
                 </div>
+                <!-- Gallery Image 5 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/holi.jpg" class="gallery-img" alt="Holi Celebration">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'holi')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.5k</span></div>
                         </div>
                     </div>
                 </div>
+                <!-- Gallery Image 6 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/krishna.jpg" class="gallery-img" alt="Krishna Janmashtami">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'krishna')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.3k</span></div>
                         </div>
                     </div>
                 </div>
-                
-                
+                <!-- Gallery Image 7 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/wedd.jpg" class="gallery-img" alt="Pre-Wedding Haldi">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'wedding')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 2.0k</span></div>
                         </div>
                     </div>
                 </div>
+                <!-- Gallery Image 8 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/birthday.jpg" class="gallery-img" alt="Office Meeting">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'birthday')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.6k</span></div>
                         </div>
                     </div>
                 </div>
+                <!-- Gallery Image 9 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
                         <img src="../static/image/b.jpg" class="gallery-img" alt="Corporate Gala">
                         <div class="gallery-overlay">
-                            <button class="btn-like" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-like" onclick="toggleFavourite(this, 'babyshower')">
+                                <i class="far fa-heart"></i>
+                            </button>
                             <div class="gallery-stats"><span><i class="fas fa-heart text-danger"></i> 1.4k</span></div>
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div> <!-- 
+            </div>
+        </div>
     </section>
 
     <!-- ======= Contact Section ======= -->
@@ -1946,7 +1967,7 @@
     </button>
     <div id="notification" class="notification"></div>
 
-    <!-- ======= Booking Modal - With full fields ======= -->
+    <!-- ======= Booking Modal ======= -->
     <div id="bookingModal" class="modal-custom">
         <div class="modal-content-custom">
             <div class="modal-header-custom">
@@ -1993,11 +2014,9 @@
                         </select>
                     </div>
                     
-                    <!-- Venue Address Field -->
                     <div class="col-12 mb-3">
                         <textarea id="venue-address" class="form-control-custom" placeholder="Venue Address *" rows="2" required></textarea>
                     </div>
-                    <!-- Special Requests Field -->
                     <div class="col-12 mb-3">
                         <textarea id="special-requests" class="form-control-custom" placeholder="Special Requests (Optional)" rows="2"></textarea>
                     </div>
@@ -2103,112 +2122,119 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
         AOS.init({ duration: 800, once: true });
 
-        
-        function setPriceMode(service, mode) {
-            
-            document.getElementById('fixed-' + service).style.display = (mode === 'fixed' ? 'block' : 'none');
-            document.getElementById('custom-' + service).style.display = (mode === 'custom' ? 'block' : 'none');
-            
-            
-            let btns = document.querySelectorAll('#toggle-' + service + ' .btn');
-            btns.forEach(btn => btn.classList.remove('active'));
-            if (mode === 'fixed') {
-                btns[0].classList.add('active');
-            } else {
-                btns[1].classList.add('active');
+        // ========== FAVOURITE FUNCTIONALITY ==========
+        // Load user's favourites on page load
+        async function loadFavourites() {
+            try {
+                const response = await fetch('/api/get_favourites');
+                const data = await response.json();
+                
+                // Get all like buttons
+                const buttons = document.querySelectorAll('.btn-like');
+                buttons.forEach(button => {
+                    const imageName = button.getAttribute('data-image');
+                    const icon = button.querySelector('i');
+                    
+                    if (data.favourites && data.favourites.includes(imageName)) {
+                        // This image is favourited
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        button.classList.add('liked');
+                    } else {
+                        // Not favourited
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        button.classList.remove('liked');
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading favourites:', error);
             }
         }
 
-        // कार्टमध्ये Add to Cart
-        function addToCart(service, displayName) {
-            let mode = document.querySelector('#toggle-' + service + ' .btn.active').innerText.trim().toLowerCase();
-            let price, finalName;
-            
-            if (mode === 'fixed') {
-            
-                let select = document.getElementById(service + '-select');
-                price = parseFloat(select.value);
-                let optionText = select.options[select.selectedIndex].text;
-                finalName = displayName + ' - ' + optionText.split(' - ')[0];
-            } else {
+        // Toggle favourite function - data-image attribute required on button
+        async function toggleFavourite(button, imageName) {
+            // Check if user is logged in
+            try {
+                const checkResponse = await fetch('/api/check_login');
+                const loginData = await checkResponse.json();
                 
-                let input = document.getElementById(service + '-custom');
-                price = parseFloat(input.value);
-                
-                // Validation
-                if (isNaN(price) || price <= 0) {
-                    showNotification('Please enter a valid budget amount!', 'error');
+                if (!loginData.logged_in) {
+                    showNotification('Please login first to add favourites!', 'error');
                     return;
                 }
                 
-                // Minimum price check 
-                let minPrice = {
-                    'wedding': 20000,
-                    'birthday': 5000,
-                    'corporate': 15000,
-                    'anniversary': 8000,
-                    'baby': 5000,
-                    'festival': 3000,
-                    'car': 3000,
-                    'murti': 2000,
-                    'opening': 5000
-                }[service];
+                // Toggle favourite via API
+                const response = await fetch('/api/toggle_favourite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ image_name: imageName })
+                });
                 
-                if (price < minPrice) {
-                    showNotification(`Minimum budget for this service is ₹${minPrice}!`, 'error');
-                    return;
+                const data = await response.json();
+                
+                if (data.success) {
+                    const icon = button.querySelector('i');
+                    if (data.liked) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        button.classList.add('liked');
+                        showNotification('Added to favourites! ❤️');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        button.classList.remove('liked');
+                        showNotification('Removed from favourites!');
+                    }
+                } else {
+                    showNotification(data.message || 'Something went wrong!', 'error');
                 }
-                
-                finalName = displayName + ' (Custom Budget)';
+            } catch (error) {
+                console.error('Error toggling favourite:', error);
+                showNotification('Server error! Please try again.', 'error');
             }
-            
-            // Check if service 
-            if (selectedServices.some(s => s.name.includes(displayName))) {
-                showNotification(displayName + ' already selected!', 'error');
-                return;
-            }
-            
-            // Cart 
-            selectedServices.push({
-                id: Date.now() + Math.random(),
-                name: finalName,
-                price: price,
-                original_service: displayName,
-                mode: mode
-            });
-            
-            updateSelectedItemsDisplay();
-            showNotification(finalName + ' added with ₹' + price.toLocaleString());
-            document.getElementById('global-book-now-btn').style.display = 'flex';
         }
 
-        // ========== जुनी फंक्शन्स (तशीच ठेवली) ==========
-        let selectedServices = [];
-        let bookingData = {};
-        let selectedPaymentOption = '';
-
+        // Load favourites when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            loadFavourites();
+            
+            // Set min date for event date picker
             let today = new Date().toISOString().split('T')[0];
             if (document.getElementById('event-date')) {
                 document.getElementById('event-date').min = today;
             }
+            
+            // Global book now button
             document.getElementById('global-book-now-btn').addEventListener('click', showBookingModal);
             
-            // लॉगिन स्टेटस चेक करा
+            // Check login status and update auth buttons
             fetch('/api/check_login')
                 .then(response => response.json())
                 .then(data => {
                     const authDiv = document.getElementById('auth-buttons');
                     if (data.logged_in) {
                         authDiv.innerHTML = `
-                            <span class="text-white me-2">Welcome, ${data.username}</span>
-                            <button class="btn-book" onclick="logout()">Logout</button>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-dark fw-semibold me-2">Welcome, ${data.username}</span>
+                                <button class="btn btn-sm btn-outline-danger" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </div>
                         `;
                     } else {
-                        authDiv.innerHTML = ''; // लॉगिन नसेल तर रिकामे
+                        authDiv.innerHTML = `
+                            <a href="/login" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                            <a href="/register" class="btn btn-primary">
+                                <i class="fas fa-user-plus"></i> Register
+                            </a>
+                        `;
                     }
                 })
                 .catch(error => {
@@ -2229,6 +2255,75 @@
                     window.location.href = '/';
                 }
             });
+        }
+
+        // Service price mode functions
+        function setPriceMode(service, mode) {
+            document.getElementById('fixed-' + service).style.display = (mode === 'fixed' ? 'block' : 'none');
+            document.getElementById('custom-' + service).style.display = (mode === 'custom' ? 'block' : 'none');
+            
+            let btns = document.querySelectorAll('#toggle-' + service + ' .btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            if (mode === 'fixed') {
+                btns[0].classList.add('active');
+            } else {
+                btns[1].classList.add('active');
+            }
+        }
+
+        // Cart functionality
+        let selectedServices = [];
+        let bookingData = {};
+        let selectedPaymentOption = '';
+
+        function addToCart(service, displayName) {
+            let mode = document.querySelector('#toggle-' + service + ' .btn.active').innerText.trim().toLowerCase();
+            let price, finalName;
+            
+            if (mode === 'fixed') {
+                let select = document.getElementById(service + '-select');
+                price = parseFloat(select.value);
+                let optionText = select.options[select.selectedIndex].text;
+                finalName = displayName + ' - ' + optionText.split(' - ')[0];
+            } else {
+                let input = document.getElementById(service + '-custom');
+                price = parseFloat(input.value);
+                
+                if (isNaN(price) || price <= 0) {
+                    showNotification('Please enter a valid budget amount!', 'error');
+                    return;
+                }
+                
+                let minPrice = {
+                    'wedding': 20000, 'birthday': 5000, 'corporate': 15000,
+                    'anniversary': 8000, 'baby': 5000, 'festival': 3000,
+                    'car': 3000, 'murti': 2000, 'opening': 5000
+                }[service];
+                
+                if (price < minPrice) {
+                    showNotification(`Minimum budget for this service is ₹${minPrice}!`, 'error');
+                    return;
+                }
+                
+                finalName = displayName + ' (Custom Budget)';
+            }
+            
+            if (selectedServices.some(s => s.name.includes(displayName))) {
+                showNotification(displayName + ' already selected!', 'error');
+                return;
+            }
+            
+            selectedServices.push({
+                id: Date.now() + Math.random(),
+                name: finalName,
+                price: price,
+                original_service: displayName,
+                mode: mode
+            });
+            
+            updateSelectedItemsDisplay();
+            showNotification(finalName + ' added with ₹' + price.toLocaleString());
+            document.getElementById('global-book-now-btn').style.display = 'flex';
         }
 
         function removeService(id) {
@@ -2345,89 +2440,81 @@
         }
 
         function processPayment() {
-    if (!selectedPaymentOption) {
-        showNotification('Please select a payment method!', 'error');
-        return;
-    }
+            if (!selectedPaymentOption) {
+                showNotification('Please select a payment method!', 'error');
+                return;
+            }
 
-    let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
-    let total = subtotal + (subtotal * 0.18);
-    
-    // payment method ची व्हॅल्यू आधी कॅप्चर कर
-    let paymentMethod = selectedPaymentOption;
-    
-    // डीबगसाठी - कन्सोलमध्ये बघ
-    console.log("💳 Payment method captured:", paymentMethod);
-
-    // आता मोडल बंद कर (यामुळे selectedPaymentOption रीसेट होईल, पण आपण व्हॅल्यू कॅप्चर केली आहे)
-    closePaymentModal();
-
-    let bookingDataToSend = {
-        full_name: bookingData.full_name,
-        email: bookingData.email,
-        phone: bookingData.phone,
-        event_date: bookingData.event_date,
-        event_type: bookingData.event_type,
-        venue_address: bookingData.venue_address,
-        special_requests: bookingData.special_requests || '',
-        payment_method: paymentMethod,   // कॅप्चर केलेली व्हॅल्यू वापर
-        services: selectedServices,
-        total_amount: total
-    };
-
-    console.log("📤 Sending booking data:", bookingDataToSend);
-    showNotification('Processing your booking...');
-
-    fetch('/api/create_booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingDataToSend)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("📥 Server response:", data);
-        if (data.success) {
-            document.getElementById('booking-id').textContent = data.booking_id;
-            document.getElementById('receipt-event-date').textContent = bookingData.event_date;
-            document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
+            let subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
+            let total = subtotal + (subtotal * 0.18);
             
-            let paymentText = {
-                cash: 'Cash', card: 'Card', online: 'Online'
-            }[paymentMethod] || paymentMethod;
-            document.getElementById('receipt-payment-method').textContent = paymentText;
-            document.getElementById('receipt-total').textContent = total.toFixed(2);
-            
-            let items = document.getElementById('receipt-items');
-            items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
-            let sTotal = 0;
-            selectedServices.forEach(s => {
-                items.innerHTML += `<div class="d-flex justify-content-between small">
-                                        <span>${s.name}</span>
-                                        <span>₹${s.price.toLocaleString()}</span>
-                                    </div>`;
-                sTotal += s.price;
+            let paymentMethod = selectedPaymentOption;
+            closePaymentModal();
+
+            let bookingDataToSend = {
+                full_name: bookingData.full_name,
+                email: bookingData.email,
+                phone: bookingData.phone,
+                event_date: bookingData.event_date,
+                event_type: bookingData.event_type,
+                venue_address: bookingData.venue_address,
+                special_requests: bookingData.special_requests || '',
+                payment_method: paymentMethod,
+                services: selectedServices,
+                total_amount: total
+            };
+
+            showNotification('Processing your booking...');
+
+            fetch('/api/create_booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingDataToSend)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('booking-id').textContent = data.booking_id;
+                    document.getElementById('receipt-event-date').textContent = bookingData.event_date;
+                    document.getElementById('receipt-customer-name').textContent = bookingData.full_name.split(' ')[0];
+                    
+                    let paymentText = {
+                        cash: 'Cash', card: 'Card', online: 'Online'
+                    }[paymentMethod] || paymentMethod;
+                    document.getElementById('receipt-payment-method').textContent = paymentText;
+                    document.getElementById('receipt-total').textContent = total.toFixed(2);
+                    
+                    let items = document.getElementById('receipt-items');
+                    items.innerHTML = '<p class="fw-bold small mb-2">Services:</p>';
+                    let sTotal = 0;
+                    selectedServices.forEach(s => {
+                        items.innerHTML += `<div class="d-flex justify-content-between small">
+                                                <span>${s.name}</span>
+                                                <span>₹${s.price.toLocaleString()}</span>
+                                            </div>`;
+                        sTotal += s.price;
+                    });
+                    items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top">
+                                            <span>GST (18%)</span>
+                                            <span>₹${(sTotal*0.18).toFixed(2)}</span>
+                                        </div>`;
+                    
+                    document.getElementById('receiptModal').classList.add('active');
+                    
+                    selectedServices = [];
+                    bookingData = {};
+                    updateSelectedItemsDisplay();
+                    document.getElementById('global-book-now-btn').style.display = 'none';
+                    showNotification('Booking confirmed! ID: ' + data.booking_id);
+                } else {
+                    showNotification('Booking failed: ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Server error! Please try again.', 'error');
             });
-            items.innerHTML += `<div class="d-flex justify-content-between small mt-2 pt-2 border-top">
-                                    <span>GST (18%)</span>
-                                    <span>₹${(sTotal*0.18).toFixed(2)}</span>
-                                </div>`;
-            
-            document.getElementById('receiptModal').classList.add('active');
-            
-            selectedServices = [];
-            bookingData = {};
-            updateSelectedItemsDisplay();
-            document.getElementById('global-book-now-btn').style.display = 'none';
-            showNotification('Booking confirmed! ID: ' + data.booking_id);
-        } else {
-            showNotification('Booking failed: ' + data.message, 'error');
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Server error! Please try again.', 'error');
-    });
-}
 
         function closeReceiptModal() {
             document.getElementById('receiptModal').classList.remove('active');
@@ -2435,19 +2522,6 @@
 
         function printReceipt() {
             window.print();
-        }
-
-        // Gallery like
-        function toggleLike(btn) {
-            let icon = btn.querySelector('i');
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                showNotification('Added to favorites!');
-            } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-            }
         }
 
         // Contact form
@@ -2462,7 +2536,6 @@
                 message: document.getElementById('contactMessage').value
             };
             
-            // Show sending notification
             showNotification('Sending message...');
             
             fetch('/api/contact', {

@@ -60,6 +60,12 @@ class Contact(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_read = db.Column(db.Boolean, default=False)
 
+class Favourite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image_name = db.Column(db.String(100), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 # -------------------- ADMIN REQUIRED DECORATOR --------------------
 def admin_required(f):
     @wraps(f)
@@ -657,6 +663,31 @@ def reset_db():
         flash(f'Reset failed: {e}', 'error')
         print(f"❌ Reset error: {e}", flush=True)
     return redirect(url_for('admin_login'))
+
+@app.route('/api/toggle_favourite', methods=['POST'])
+def toggle_favourite():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Please login first!'})
+    data = request.get_json()
+    image_name = data.get('image_name')
+    user_id = session['user_id']
+    existing = Favourite.query.filter_by(user_id=user_id, image_name=image_name).first()
+    if existing:
+        db.session.delete(existing)
+        db.session.commit()
+        return jsonify({'success': True, 'liked': False})
+    else:
+        fav = Favourite(user_id=user_id, image_name=image_name)
+        db.session.add(fav)
+        db.session.commit()
+        return jsonify({'success': True, 'liked': True})
+
+@app.route('/api/get_favourites')
+def get_favourites():
+    if 'user_id' not in session:
+        return jsonify({'favourites': []})
+    favs = Favourite.query.filter_by(user_id=session['user_id']).all()
+    return jsonify({'favourites': [f.image_name for f in favs]})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
